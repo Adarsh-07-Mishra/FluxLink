@@ -1,0 +1,92 @@
+<div class="min-h-screen bg-slate-50 text-slate-900 p-6">
+  <div class="mx-auto max-w-7xl">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-8">
+      <div>
+        <p class="text-sm uppercase tracking-[0.3em] text-sky-400">My links</p>
+        <h1 class="mt-3 text-4xl font-semibold tracking-tight text-slate-900">Dashboard</h1>
+        <p class="mt-2 max-w-2xl text-slate-600">Manage your private short URLs, review performance, and create secure links with ease.</p>
+      </div>
+
+      <%= link_to "+ New Link",
+          new_link_path,
+          class: "inline-flex items-center justify-center rounded-3xl bg-gradient-to-r from-sky-500 to-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:scale-[1.01]" %>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3 mb-10">
+      <div class="rounded-[28px] bg-white p-6 ring-1 ring-slate-200 shadow-xl">
+        <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Total links</p>
+        <p class="mt-4 text-4xl font-semibold text-slate-900"><%= @links.count %></p>
+        <p class="mt-3 text-sm text-slate-400">Links created by you.</p>
+      </div>
+      <div class="rounded-[28px] bg-white p-6 ring-1 ring-slate-200 shadow-xl">
+        <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Total clicks</p>
+        <p class="mt-4 text-4xl font-semibold text-slate-900"><%= @links.sum(:clicks) %></p>
+        <p class="mt-3 text-sm text-slate-400">All clicks across your links.</p>
+      </div>
+      <div class="rounded-[28px] bg-white p-6 ring-1 ring-slate-200 shadow-xl">
+        <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Active links</p>
+        <p class="mt-4 text-4xl font-semibold text-slate-900"><%= @links.reject(&:expired?).count %></p>
+        <p class="mt-3 text-sm text-slate-400">Links that are still valid.</p>
+      </div>
+    </div>
+
+    <% if @links.any? %>
+      <div class="grid gap-6 lg:grid-cols-2">
+        <% @links.each do |link| %>
+          <div class="overflow-hidden rounded-[32px] bg-white ring-1 ring-slate-200 p-6 shadow-xl transition hover:-translate-y-1">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p class="text-sm text-slate-400">Short URL</p>
+                <%= link_to short_url(link.short_code), short_url(link.short_code), target: "_blank", class: "mt-2 block text-lg font-semibold text-sky-300 hover:text-sky-200 underline" %>
+              </div>
+              <div class="inline-flex items-center gap-2 rounded-full bg-slate-800 px-3 py-2 text-sm text-slate-300">
+                <% if link.expired? %>
+                  <span class="rounded-full bg-red-600/20 px-3 py-1 text-red-200">Expired</span>
+                <% else %>
+                  <span class="rounded-full bg-sky-500/20 px-3 py-1 text-sky-200">Active</span>
+                <% end %>
+                <span class="text-slate-500">|</span>
+                <span><strong><%= link.clicks %></strong> clicks</span>
+              </div>
+            </div>
+
+            <div class="mt-5 rounded-3xl bg-slate-50 p-5 ring-1 ring-slate-200">
+              <p class="text-sm text-slate-400">Original URL</p>
+              <a href="<%= link.original_url %>" target="_blank" class="mt-2 block text-slate-700 line-clamp-2 hover:text-sky-500"><%= link.original_url %></a>
+            </div>
+
+            <div class="mt-6 grid gap-3 sm:grid-cols-3">
+              <div class="rounded-3xl bg-slate-50 p-4 text-sm text-slate-600">
+                <p class="text-slate-500">Created</p>
+                <p class="mt-2 font-semibold text-slate-900"><%= link.created_at.strftime("%d %b %Y") %></p>
+              </div>
+              <div class="rounded-3xl bg-slate-50 p-4 text-sm text-slate-600">
+                <p class="text-slate-500">Expiry</p>
+                <p class="mt-2 font-semibold text-slate-900"><%= link.expires_at.present? ? link.expires_at.strftime("%d %b %Y") : "None" %></p>
+              </div>
+              <div class="rounded-3xl bg-slate-50 p-4 text-sm text-slate-600">
+                <p class="text-slate-500">QR</p>
+                <p class="mt-2 font-semibold text-slate-900"><%= link.qr_code_data.present? ? "Enabled" : "Disabled" %></p>
+              </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              <%= link_to "View",
+                    link_path(link),
+                    class: "inline-flex items-center justify-center rounded-3xl bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-400" %>
+              <%= link_to "Delete",
+                    link_path(link),
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "inline-flex items-center justify-center rounded-3xl bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-400" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="rounded-[32px] bg-white p-12 text-center ring-1 ring-slate-200">
+        <p class="text-slate-400">No links created yet.</p>
+        <%= link_to "Create your first link", new_link_path, class: "mt-6 inline-flex rounded-3xl bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-400" %>
+      </div>
+    <% end %>
+  </div>
+</div>

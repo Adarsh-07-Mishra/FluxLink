@@ -1,0 +1,161 @@
+<div class="min-h-screen bg-slate-50 text-slate-900 p-6">
+  <div class="mx-auto max-w-6xl bg-white shadow-2xl rounded-[32px] overflow-hidden">
+    <div class="grid gap-8 lg:grid-cols-[1.2fr_.8fr] p-8 lg:p-10">
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <p class="text-sm uppercase tracking-[0.3em] text-sky-400">Link details</p>
+          <h1 class="text-4xl font-semibold tracking-tight">Your shortened URL</h1>
+          <p class="max-w-2xl text-slate-400">Share securely, monitor clicks, and manage the link from one dashboard.</p>
+        </div>
+
+        <div class="rounded-[32px] bg-slate-50 p-6 ring-1 ring-slate-200 shadow-lg">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-500">Short URL</p>
+              <p class="mt-3 text-lg font-semibold text-slate-900"><%= short_url(@link.short_code) %></p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button id="copy-btn" class="inline-flex items-center justify-center rounded-3xl bg-sky-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-400">Copy URL</button>
+              <%= link_to "Open", short_url(@link.short_code), target: "_blank", class: "inline-flex items-center justify-center rounded-3xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="rounded-[28px] bg-white p-6 ring-1 ring-slate-200">
+            <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Clicks</p>
+            <p class="mt-4 text-4xl font-semibold text-slate-900"><%= @link.clicks %></p>
+            <p class="mt-2 text-sm text-slate-400">Total times this link has been used.</p>
+          </div>
+          <div class="rounded-[28px] bg-white p-6 ring-1 ring-slate-200">
+            <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Status</p>
+            <p class="mt-4 text-4xl font-semibold text-slate-900"><%= @link.expired? ? "Expired" : "Active" %></p>
+            <p class="mt-2 text-sm text-slate-400"><%= @link.expires_at.present? ? @link.expires_at.strftime("%d %b %Y %H:%M") : "No expiration" %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-[32px] bg-slate-50 p-6 ring-1 ring-slate-200">
+        <div class="space-y-5">
+          <div>
+            <p class="text-sm uppercase tracking-[0.24em] text-slate-500">Original URL</p>
+            <a href="<%= @link.original_url %>" target="_blank" class="mt-3 block text-slate-900 text-sm leading-6 break-words hover:text-sky-600"><%= @link.original_url %></a>
+          </div>
+          <div class="grid gap-4">
+            <div class="rounded-3xl bg-slate-50 p-4">
+              <p class="text-xs uppercase tracking-[0.24em] text-slate-500">Short code</p>
+              <p class="mt-2 text-sm font-semibold text-slate-900"><%= @link.short_code %></p>
+            </div>
+            <div class="rounded-3xl bg-slate-50 p-4">
+              <p class="text-xs uppercase tracking-[0.24em] text-slate-500">QR code</p>
+              <p class="mt-2 text-sm font-semibold text-slate-900"><%= @link.qr_code_data.present? ? "Enabled" : "Disabled" %></p>
+            </div>
+            <div class="rounded-3xl bg-slate-50 p-4">
+              <p class="text-xs uppercase tracking-[0.24em] text-slate-500">Created</p>
+              <p class="mt-2 text-sm font-semibold text-slate-900"><%= @link.created_at.strftime("%d %b %Y") %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% if @link.qr_code_data.present? %>
+      <div class="mx-auto max-w-4xl px-6 pb-8">
+        <div class="rounded-[32px] bg-white p-8 ring-1 ring-slate-200 shadow-xl text-center">
+          <p class="text-sm uppercase tracking-[0.3em] text-slate-500">QR Code</p>
+          <div id="qr-code" class="mt-6 inline-flex rounded-3xl bg-white/5 p-8">
+            <%= raw @link.qr_code_data %>
+          </div>
+          <button id="download-btn" class="mt-6 inline-flex items-center justify-center rounded-3xl bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-400">Download QR</button>
+        </div>
+      </div>
+    <% end %>
+
+    <% expiry_text = @link.expires_at.present? ? @link.expires_at.strftime("%d %b %Y, %H:%M") : "Never expires" %>
+    <% status_label = @link.expired? ? "Expired" : "Active" %>
+    <% status_color = @link.expired? ? "bg-rose-500" : "bg-emerald-500" %>
+
+    <div class="mx-auto max-w-5xl px-6 pb-10">
+      <div class="rounded-[32px] bg-white p-8 ring-1 ring-slate-200 shadow-xl">
+        <div class="grid gap-6 lg:grid-cols-[1.4fr_0.9fr]">
+          <div class="space-y-5">
+            <div>
+              <p class="text-sm uppercase tracking-[0.3em] text-sky-500">Link overview</p>
+              <h2 class="mt-3 text-3xl font-semibold text-slate-900">Minimal snapshot</h2>
+              <p class="mt-2 text-sm text-slate-500 max-w-2xl">Only the most important details, presented cleanly so your users can act fast.</p>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-3">
+              <div class="rounded-[28px] bg-slate-50 p-5 ring-1 ring-slate-200">
+                <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Clicks</p>
+                <p class="mt-3 text-3xl font-semibold text-slate-900"><%= @link.clicks %></p>
+              </div>
+              <div class="rounded-[28px] bg-slate-50 p-5 ring-1 ring-slate-200">
+                <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Expires</p>
+                <p class="mt-3 text-lg font-semibold text-slate-900"><%= expiry_text %></p>
+              </div>
+              <div class="rounded-[28px] bg-slate-50 p-5 ring-1 ring-slate-200">
+                <p class="text-xs uppercase tracking-[0.3em] text-slate-500">QR code</p>
+                <p class="mt-3 text-lg font-semibold text-slate-900"><%= @link.qr_code_data.present? ? "Enabled" : "Disabled" %></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-[28px] bg-slate-50 p-6 ring-1 ring-slate-200">
+            <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Ready to share</p>
+            <h3 class="mt-4 text-2xl font-semibold text-slate-900">Smooth sharing</h3>
+            <p class="mt-3 text-sm text-slate-500">Everything is set. Use the buttons above to copy or open your link instantly.</p>
+            <div class="mt-6 rounded-[24px] bg-white p-4 ring-1 ring-slate-200">
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Link type</p>
+              <p class="mt-2 text-sm font-semibold text-slate-900"><%= @link.qr_code_data.present? ? "QR ready" : "Standard" %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 pb-10">
+      <%= link_to "← Back to dashboard", links_path, class: "inline-flex items-center justify-center rounded-3xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" %>
+      <%= link_to "Create another link", new_link_path, class: "inline-flex items-center justify-center rounded-3xl bg-sky-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-400" %>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+  const copyBtn = document.getElementById("copy-btn");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", function () {
+      const shortUrl = "<%= short_url(@link.short_code) %>";
+      navigator.clipboard.writeText(shortUrl);
+      showToast("Copied 🚀");
+    });
+  }
+
+  const downloadBtn = document.getElementById("download-btn");
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", function () {
+      const svg = document.querySelector("#qr-code svg");
+      const serializer = new XMLSerializer();
+      const source = serializer.serializeToString(svg);
+      const blob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "qr-code.svg";
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast("Downloaded 📥");
+    });
+  }
+
+  function showToast(msg) {
+    const t = document.createElement("div");
+    t.innerText = msg;
+    t.className = "fixed bottom-5 right-5 rounded-2xl bg-slate-900 px-4 py-3 text-sm text-white shadow-2xl";
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2200);
+  }
+
+});
+</script>

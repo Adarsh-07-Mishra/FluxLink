@@ -1,0 +1,18 @@
+<div class="min-h-screen bg-slate-950 text-slate-100 px-6 py-16 lg:px-12">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-12 rounded-[32px] bg-slate-900/90 p-10 ring-1 ring-white/10 shadow-[0_25px_80px_rgba(15,23,42,0.35)] backdrop-blur-xl">
+      <p class="text-sm uppercase tracking-[0.3em] text-sky-400">Features</p>
+      <h1 class="mt-4 text-4xl font-semibold tracking-tight text-white">Everything your short-link workflow needs.</h1>
+      <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-300">Designed to shorten URLs quickly, protect them privately, and give you instant visibility into every click.</p>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-3">
+      <% [{title: 'Branded short links', body: 'Create clean short URLs with optional custom aliases.'}, {title: 'Password protection', body: 'Lock links behind a password for private sharing.'}, {title: 'QR codes included', body: 'Generate a scannable QR code with every link.'}, {title: 'Click analytics', body: 'Track how your links perform over time.'}, {title: 'Link management', body: 'Edit, delete, and monitor links from one dashboard.'}, {title: 'Fast access', body: 'Start shortening with the homepage form instantly.'}].each do |feature| %>
+        <div class="rounded-[28px] bg-white/5 p-8 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(15,23,42,0.18)]">
+          <p class="text-sm uppercase tracking-[0.3em] text-sky-300"><%= feature[:title] %></p>
+          <p class="mt-4 text-lg font-semibold text-white"><%= feature[:body] %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "FluxLink" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      #page-transition-wrapper {
+        opacity: 0;
+        transform: translate3d(0,24px,0) scale(0.98);
+        filter: blur(12px);
+        transition: opacity 0.45s cubic-bezier(0.22,1,0.36,1), transform 0.45s cubic-bezier(0.22,1,0.36,1), filter 0.45s ease;
+      }
+      #page-transition-wrapper.ready {
+        opacity: 1;
+        transform: translate3d(0,0,0) scale(1);
+        filter: blur(0);
+      }
+      #page-transition-wrapper.exiting {
+        opacity: 0;
+        transform: translate3d(0,-20px,0) scale(0.96);
+        filter: blur(3px);
+      }
+      #transition-overlay {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0;
+        transform: scale(0.96);
+        background: radial-gradient(circle at 15% 20%, rgba(56,189,248,0.22), transparent 18%),
+                    radial-gradient(circle at 85% 30%, rgba(59,130,246,0.16), transparent 18%),
+                    radial-gradient(circle at 50% 90%, rgba(168,85,247,0.12), transparent 20%);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        z-index: 9999;
+      }
+      #transition-overlay.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100 min-w-full">
+    <div class="min-h-screen w-full">
+      <header class="bg-white border-b py-4 shadow-sm">
+        <div class="w-full mx-auto flex flex-wrap items-center justify-between gap-4 px-4 max-w-full">
+          <div class="flex items-center gap-6">
+            <div>
+              <%= link_to "FluxLink", (logged_in? ? links_path : root_path), class: "text-lg font-semibold text-slate-900" %>
+            </div>
+            <nav class="hidden items-center gap-6 text-sm text-slate-700 md:flex">
+              <%= link_to "Home", root_path, class: "transition hover:text-slate-900" %>
+              <%= link_to "Features", features_path, class: "transition hover:text-slate-900" %>
+              <%= link_to "Pricing", pricing_path, class: "transition hover:text-slate-900" %>
+              <%= link_to "About", about_path, class: "transition hover:text-slate-900" %>
+              <%= link_to "Contact", contact_path, class: "transition hover:text-slate-900" %>
+            </nav>
+          </div>
+
+          <div class="flex items-center gap-4 text-sm text-slate-700">
+            <% if logged_in? %>
+              <span>Signed in as <strong><%= current_user.email %></strong></span>
+              <%= button_to "Logout", logout_path, method: :delete, class: "rounded-md bg-slate-900 px-3 py-2 text-white hover:bg-slate-800" %>
+            <% else %>
+              <%= link_to "Login", login_path, class: "rounded-full border border-slate-300 bg-white px-4 py-2 text-slate-700 transition hover:bg-slate-50" %>
+              <%= link_to "Sign Up", signup_path, class: "rounded-full bg-sky-500 px-4 py-2 text-white transition hover:bg-sky-400" %>
+            <% end %>
+          </div>
+        </div>
+      </header>
+
+      <div id="page-transition-wrapper" class="w-full mx-auto px-4 py-8 max-w-full">
+        <% if notice %>
+          <div class="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-green-800">
+            <%= notice %>
+          </div>
+        <% end %>
+
+        <% if alert %>
+          <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-800">
+            <%= alert %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+    </div>
+    <script>
+      function initPageTransitions() {
+        const wrapper = document.getElementById('page-transition-wrapper');
+        if (!wrapper) return;
+
+        let overlay = document.getElementById('transition-overlay');
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'transition-overlay';
+          document.body.appendChild(overlay);
+        }
+
+        wrapper.classList.remove('exiting');
+        requestAnimationFrame(() => wrapper.classList.add('ready'));
+
+        document.addEventListener('click', function(event) {
+          const link = event.target.closest('a[data-transition]');
+          if (!link) return;
+          if (event.defaultPrevented) return;
+          if (link.target && link.target !== '_self') return;
+          if (link.href.indexOf(location.origin) !== 0) return;
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+          event.preventDefault();
+          wrapper.classList.add('exiting');
+          wrapper.classList.remove('ready');
+          overlay.classList.add('active');
+
+          setTimeout(() => {
+            window.location = link.href;
+          }, 280);
+        }, true);
+      }
+
+      document.addEventListener('DOMContentLoaded', initPageTransitions);
+      document.addEventListener('turbo:load', initPageTransitions);
+    </script>
+  </body>
+</html>

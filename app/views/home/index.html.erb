@@ -1,0 +1,169 @@
+<div class="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.2),_transparent_18%),radial-gradient(circle_at_80%_10%,_rgba(168,85,247,0.16),_transparent_18%),radial-gradient(circle_at_50%_100%,_rgba(14,165,233,0.1),_transparent_25%)]"></div>
+
+  <main class="relative mx-auto w-full max-w-screen-6xl px-6 py-16 lg:px-12">
+    <section class="relative overflow-hidden rounded-[3rem] border border-white/10 bg-slate-900/75 p-10 shadow-[0_50px_120px_rgba(15,23,42,0.35)] backdrop-blur-xl">
+      <div class="absolute -right-20 top-12 h-44 w-44 rounded-full bg-sky-500/20 blur-3xl"></div>
+      <div class="absolute left-10 bottom-0 h-36 w-36 rounded-full bg-indigo-500/15 blur-3xl"></div>
+
+      <div class="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div class="space-y-8">
+          <span class="inline-flex rounded-full bg-sky-500/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.35em] text-sky-300">FluxLink short URLs + QR</span>
+          <div class="space-y-5 max-w-xl">
+            <h1 class="text-5xl font-semibold tracking-tight text-white sm:text-6xl">FluxLink makes short URLs faster, smarter, and more secure.</h1>
+            <p class="text-xl leading-8 text-slate-300">Create clip-ready short links, protect them with passwords, generate QR codes, and manage everything from one polished dashboard.</p>
+          </div>
+
+          <div class="flex flex-col gap-4 sm:flex-row">
+            <%= link_to "Start shortening", signup_path, class: "inline-flex items-center justify-center rounded-full bg-sky-500 px-8 py-4 text-sm font-semibold text-white transition hover:bg-sky-400" %>
+            <a href="#features" class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white transition hover:border-sky-300 hover:bg-white/10">Explore features</a>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-3">
+            <% [{label: 'Instant links', value: '0.5s'}, {label: 'QR ready', value: 'Built-in'}, {label: 'Private sharing', value: 'Password lock'}].each do |stat| %>
+              <div class="rounded-3xl bg-slate-950/80 p-5">
+                <p class="text-2xl font-semibold text-white"><%= stat[:value] %></p>
+                <p class="mt-2 text-sm uppercase tracking-[0.3em] text-slate-400"><%= stat[:label] %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="rounded-[32px] border border-white/10 bg-slate-950/80 p-8 shadow-[0_35px_90px_rgba(15,23,42,0.25)] backdrop-blur-xl">
+          <div class="mb-6 flex items-center justify-between rounded-3xl bg-slate-900/70 px-5 py-4">
+            <span class="text-sm uppercase tracking-[0.3em] text-slate-400">Try it live</span>
+            <span class="rounded-full bg-sky-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-sky-200">New</span>
+          </div>
+          <%= form_with url: shorten_path, method: :post, local: true, class: "space-y-4" do |form| %>
+            <div class="space-y-2">
+              <label class="block text-sm font-medium text-slate-300" for="original_url">Destination URL</label>
+              <%= form.url_field :original_url,
+                value: @original_url,
+                id: "original_url",
+                class: "w-full rounded-3xl border border-slate-700/70 bg-slate-950/90 px-5 py-4 text-sm text-white placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/20",
+                placeholder: "https://example.com/long-url"
+              %>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-[1fr_auto]">
+              <%= form.submit "Shorten URL", class: "w-full rounded-3xl bg-gradient-to-r from-sky-500 to-indigo-500 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:scale-[1.01] hover:from-sky-600 hover:to-indigo-600" %>
+              <%= link_to "Go to dashboard", links_path, class: "inline-flex items-center justify-center rounded-3xl border border-white/10 bg-white/5 px-6 py-4 text-sm font-semibold text-white transition hover:bg-white/10" %>
+            </div>
+          <% end %>
+          <div class="mt-6 rounded-[28px] bg-slate-900/70 p-5 text-sm text-slate-400">
+            <p class="font-semibold text-white">Your URL stays safe.</p>
+            <p class="mt-1">The link is preserved through signup so you can finish shortening without losing progress.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="mt-24 grid gap-6 lg:grid-cols-3">
+      <% [{title: 'Custom short codes', description: 'Choose a friendly alias for every destination.'}, {title: 'Password locked links', description: 'Protect private pages with one click.'}, {title: 'QR code support', description: 'Generate a scannable QR with every short URL.'}, {title: 'Live analytics', description: 'Track clicks and destination performance.'}, {title: 'Link management', description: 'Edit, pause, or delete links from one dashboard.'}, {title: 'Fast workflow', description: 'Paste, create, share — all in seconds.'}].each do |item| %>
+        <div class="rounded-[28px] bg-white/5 p-8 ring-1 ring-white/10 shadow-[0_25px_75px_rgba(15,23,42,0.18)] transition duration-500 ease-out hover:-translate-y-1 hover:bg-white/10">
+          <p class="text-sm uppercase tracking-[0.3em] text-sky-300"><%= item[:title] %></p>
+          <p class="mt-5 text-lg font-semibold text-white"><%= item[:description] %></p>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="mt-24 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div class="space-y-6">
+        <p class="text-sm uppercase tracking-[0.3em] text-sky-300">Workflow</p>
+        <h2 class="text-4xl font-semibold text-white">A polished end-to-end experience.</h2>
+        <p class="max-w-2xl text-slate-300">From pasting a URL to sharing a QR code, every step is designed to feel fast, modern, and intuitive.</p>
+
+        <% [{label: 'Step 1', title: 'Enter your destination', body: 'Paste a long URL into the homepage field.'}, {label: 'Step 2', title: 'Sign up quickly', body: 'Continue through signup while keeping your link saved.'}, {label: 'Step 3', title: 'Share instantly', body: 'Share a short URL or QR code with anyone.'}].each do |step| %>
+          <div class="group overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/80 p-6 transition duration-500 ease-out hover:-translate-y-1 hover:border-sky-400">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <p class="text-sm uppercase tracking-[0.3em] text-sky-300"><%= step[:label] %></p>
+                <p class="mt-3 text-xl font-semibold text-white"><%= step[:title] %></p>
+              </div>
+              <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-sky-500 text-lg font-semibold text-white">✓</span>
+            </div>
+            <p class="mt-4 text-slate-400"><%= step[:body] %></p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="rounded-[32px] bg-gradient-to-br from-slate-900/80 via-slate-950/80 to-slate-900/90 p-8 ring-1 ring-white/10 shadow-[0_35px_90px_rgba(15,23,42,0.25)]">
+        <div class="rounded-[28px] bg-slate-950/90 p-6 ring-1 ring-white/10">
+          <div class="mb-4 flex items-center justify-between gap-4 text-sm text-slate-400">
+            <span>Live preview</span>
+            <span class="rounded-full bg-slate-900/60 px-3 py-1 uppercase tracking-[0.3em] text-slate-300">Beta</span>
+          </div>
+          <div class="space-y-5">
+            <div class="rounded-[24px] bg-slate-900 p-5">
+              <div class="text-sm uppercase tracking-[0.3em] text-slate-400">Short URL</div>
+              <div class="mt-3 rounded-3xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white">https://short.ly/your-link</div>
+            </div>
+            <div class="rounded-[24px] bg-slate-900 p-5">
+              <div class="text-sm uppercase tracking-[0.3em] text-slate-400">QR code</div>
+              <div class="mt-4 flex items-center justify-center rounded-3xl bg-slate-950 p-6">
+                <div class="h-40 w-40 rounded-3xl bg-slate-800"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-24 rounded-[32px] bg-white/5 p-10 ring-1 ring-white/10 shadow-[0_25px_80px_rgba(15,23,42,0.18)]">
+      <div class="grid gap-6 md:grid-cols-3">
+        <% [{label: 'Links shortened', value: '128K+'}, {label: 'Protected links', value: '23K+'}, {label: 'QR codes generated', value: '41K+'}].each do |stat| %>
+          <div class="rounded-[28px] bg-slate-950/80 p-8 text-center transition duration-500 ease-out hover:-translate-y-1 hover:bg-slate-900">
+            <p class="text-4xl font-semibold text-white"><%= stat[:value] %></p>
+            <p class="mt-3 text-sm uppercase tracking-[0.3em] text-slate-400"><%= stat[:label] %></p>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <section id="testimonials" class="mt-24 space-y-8">
+      <div class="space-y-4 text-center">
+        <p class="text-sm uppercase tracking-[0.3em] text-sky-300">Trusted by creators</p>
+        <h3 class="text-3xl font-semibold text-white">Built for teams, creators, and everyday sharing.</h3>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-3">
+        <% [{quote: 'Shortening links is now part of my everyday workflow. It feels polished and fast.', author: 'Maya, Product Manager'}, {quote: 'I love that I can lock a link behind a password before sharing it publicly.', author: 'Jordan, Freelancer'}, {quote: 'The homepage makes it easy to get started immediately and the dashboard keeps everything organized.', author: 'Sam, Marketing Lead'}].each do |testimonial| %>
+          <div class="rounded-[28px] bg-slate-900/70 p-8 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(15,23,42,0.16)] transition duration-500 ease-out hover:-translate-y-1 hover:bg-slate-900/90">
+            <p class="text-lg leading-8 text-slate-300">“<%= testimonial[:quote] %>”</p>
+            <p class="mt-6 text-sm font-semibold text-white"><%= testimonial[:author] %></p>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <section id="faq" class="mt-24 rounded-[32px] bg-white/5 p-10 ring-1 ring-white/10 shadow-[0_25px_60px_rgba(15,23,42,0.18)]">
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div class="space-y-4">
+          <p class="text-sm uppercase tracking-[0.3em] text-sky-300">FAQ</p>
+          <h3 class="text-3xl font-semibold text-white">Questions answered fast.</h3>
+          <p class="text-slate-300">Everything you need to know before you create your first link.</p>
+        </div>
+        <div class="space-y-4 text-slate-300">
+          <% [{question: 'Can I keep my URL after signup?', answer: 'Yes — the homepage preserves your entered link through the signup flow.'}, {question: 'Can I protect links with a password?', answer: 'Absolutely. Every link can be locked and shared privately.'}, {question: 'Is analytics available now?', answer: 'Yes. Click counts are visible on your dashboard for each link.'}].each do |item| %>
+            <div class="rounded-[24px] bg-slate-950/70 p-5 transition duration-500 ease-out hover:bg-slate-950/90">
+              <p class="font-semibold text-white"><%= item[:question] %></p>
+              <p class="mt-2 text-sm text-slate-400"><%= item[:answer] %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-24 rounded-[32px] bg-slate-900/90 p-12 text-center ring-1 ring-white/10 shadow-[0_25px_80px_rgba(15,23,42,0.25)] backdrop-blur-xl">
+      <p class="text-sm uppercase tracking-[0.3em] text-sky-300">Ready to start</p>
+      <h3 class="mt-4 text-4xl font-semibold text-white">Launch your first short link today.</h3>
+      <p class="mt-4 max-w-2xl mx-auto text-slate-300">Create a link now and experience modern link shortening with QR generation, password protection, and a dashboard built for speed.</p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <%= link_to "Shorten now", signup_path, class: "inline-flex items-center justify-center rounded-full bg-sky-500 px-8 py-4 text-sm font-semibold text-white transition hover:bg-sky-400" %>
+        <%= link_to "View dashboard", links_path, class: "inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/10" %>
+      </div>
+    </section>
+
+    <footer class="mt-20 border-t border-white/10 pt-10 text-center text-sm text-slate-400">
+      <p>Built for modern link sharing. Create your first short URL in one quick step.</p>
+    </footer>
+  </main>
+</div>

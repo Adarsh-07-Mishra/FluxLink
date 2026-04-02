@@ -1,0 +1,30 @@
+<div class="min-h-screen bg-slate-950 text-slate-100 px-6 py-16 lg:px-12">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-12 rounded-[32px] bg-slate-900/90 p-10 ring-1 ring-white/10 shadow-[0_25px_80px_rgba(15,23,42,0.35)] backdrop-blur-xl">
+      <p class="text-sm uppercase tracking-[0.3em] text-sky-400">Pricing</p>
+      <h1 class="mt-4 text-4xl font-semibold tracking-tight text-white">Simple plans for every link builder.</h1>
+      <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-300">No surprise fees, no confusing tiers. Choose a plan that fits your growth and keep your links under control.</p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+      <% [{name: 'Starter', price: '$0', description: 'Perfect for testing and light usage.', bullets: ['Unlimited free links', 'Basic analytics', 'Password and QR support']}, {name: 'Pro', price: '$9/mo', description: 'For creatives and teams that need more.', bullets: ['Custom short codes', 'Advanced analytics', 'Priority support']}, {name: 'Business', price: '$29/mo', description: 'Scale your brand with premium tools.', bullets: ['Team access', 'Export reports', 'Link performance insights']}].each do |plan| %>
+        <div class="rounded-[32px] bg-white/5 p-8 ring-1 ring-white/10 shadow-[0_25px_60px_rgba(15,23,42,0.25)]">
+          <p class="text-sm uppercase tracking-[0.3em] text-sky-300"><%= plan[:name] %></p>
+          <div class="mt-6 flex items-end justify-between gap-4">
+            <p class="text-5xl font-semibold text-white"><%= plan[:price] %></p>
+            <span class="rounded-full bg-slate-800 px-4 py-2 text-sm text-slate-300">Best value</span>
+          </div>
+          <p class="mt-4 text-slate-300"><%= plan[:description] %></p>
+          <ul class="mt-6 space-y-3 text-slate-400">
+            <% plan[:bullets].each do |bullet| %>
+              <li class="flex gap-3"><span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-sky-400"></span><%= bullet %></li>
+            <% end %>
+          </ul>
+          <div class="mt-8">
+            <%= link_to "Start now", signup_path, class: "inline-flex items-center justify-center rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-400" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
