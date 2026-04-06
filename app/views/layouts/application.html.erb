@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "FluxLink" %></title>
+    <title><%= content_for(:title) || "FluxLink - Smart URL Shortening" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="Create, protect, and track short links with FluxLink. Fast, secure, and simple URL shortening.">
+    <meta name="theme-color" content="#0f172a">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -17,90 +19,749 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+      * {
+        font-family: 'Sora', 'Inter', sans-serif;
+        @apply transition-all duration-300;
+      }
+
       html {
         scroll-behavior: smooth;
       }
-      #page-transition-wrapper {
-        opacity: 0;
-        transform: translate3d(0,24px,0) scale(0.98);
-        filter: blur(12px);
-        transition: opacity 0.45s cubic-bezier(0.22,1,0.36,1), transform 0.45s cubic-bezier(0.22,1,0.36,1), filter 0.45s ease;
+
+      body {
+        @apply bg-slate-950;
+        background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%);
+        background-attachment: fixed;
+        position: relative;
+        overflow-x: hidden;
       }
+
+      /* Animated Background Elements */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: 
+          radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
+          radial-gradient(circle at 40% 0%, rgba(34, 197, 94, 0.15) 0%, transparent 50%);
+        animation: gradientShift 20s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: 
+          url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/></filter></defs><rect width="100" height="100" fill="%230f172a" filter="url(%23noise)" opacity="0.05"/></svg>');
+        animation: float 30s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      @keyframes gradientShift {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(50px, -50px) scale(1.1); }
+        50% { transform: translate(-50px, 50px) scale(0.9); }
+        75% { transform: translate(30px, 30px) scale(1.05); }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(20px); }
+      }
+
+      /* Page Transition Wrapper */
+      #page-transition-wrapper {
+        position: relative;
+        z-index: 10;
+        opacity: 0;
+        transform: translate3d(0, 40px, 0) scale(0.95) rotateX(10deg);
+        filter: blur(20px);
+        transition: all 0.7s cubic-bezier(0.23, 1, 0.320, 1);
+      }
+
       #page-transition-wrapper.ready {
         opacity: 1;
-        transform: translate3d(0,0,0) scale(1);
+        transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
         filter: blur(0);
       }
+
       #page-transition-wrapper.exiting {
         opacity: 0;
-        transform: translate3d(0,-20px,0) scale(0.96);
-        filter: blur(3px);
+        transform: translate3d(0, -40px, 0) scale(0.95) rotateX(-10deg);
+        filter: blur(20px);
       }
+
+      /* Transition Overlay */
       #transition-overlay {
         position: fixed;
         inset: 0;
         pointer-events: none;
         opacity: 0;
-        transform: scale(0.96);
-        background: radial-gradient(circle at 15% 20%, rgba(56,189,248,0.22), transparent 18%),
-                    radial-gradient(circle at 85% 30%, rgba(59,130,246,0.16), transparent 18%),
-                    radial-gradient(circle at 50% 90%, rgba(168,85,247,0.12), transparent 20%);
-        transition: opacity 0.35s ease, transform 0.35s ease;
         z-index: 9999;
+        background: 
+          radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.5), transparent 25%),
+          radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.4), transparent 25%),
+          radial-gradient(circle at 50% 90%, rgba(34, 197, 94, 0.3), transparent 30%);
+        backdrop-filter: blur(40px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       #transition-overlay.active {
         opacity: 1;
-        transform: scale(1);
+      }
+
+      /* ==================== HEADER ==================== */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        height: 80px;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.7) 100%);
+        backdrop-filter: blur(30px) saturate(200%);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        animation: slideDown 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 50%),
+                    radial-gradient(circle at top left, rgba(168, 85, 247, 0.1), transparent 50%);
+        pointer-events: none;
+      }
+
+      body {
+        padding-top: 80px;
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 10;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2rem;
+      }
+
+      /* Logo & Brand */
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+      }
+
+      .logo-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #3b82f6 0%, #7c3aed 50%, #1e40af 100%);
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.1),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+                    inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) scale(1); }
+        50% { transform: translateY(-8px) scale(1.02); }
+      }
+
+      .logo-icon::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(45deg, 
+          transparent 30%, 
+          rgba(255, 255, 255, 0.2) 50%, 
+          transparent 70%);
+        animation: shimmer 4s infinite;
+      }
+
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      .logo-icon:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5),
+                    0 0 0 1px rgba(255, 255, 255, 0.15),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+                    inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .logo-text {
+        font-size: 1.25rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #3b82f6 0%, #7c3aed 50%, #06b6d4 100%);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientFlow 8s ease infinite;
+        letter-spacing: -0.5px;
+      }
+
+      @keyframes gradientFlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      /* Navigation */
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      nav a {
+        position: relative;
+        padding: 8px 16px;
+        color: rgba(203, 213, 225, 0.8);
+        font-weight: 500;
+        font-size: 0.95rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      nav a::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: -100%;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #7c3aed, #06b6d4);
+        transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      nav a::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      nav a:hover {
+        color: #ffffff;
+      }
+
+      nav a:hover::before {
+        left: 0;
+      }
+
+      nav a:hover::after {
+        opacity: 1;
+      }
+
+      /* Auth Buttons */
+      .auth-buttons {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Button Base */
+      .btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        overflow: hidden;
+        cursor: pointer;
+        border: none;
+        white-space: nowrap;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      /* Primary Button */
+      .btn-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #7c3aed 50%, #06b6d4 100%);
+        background-size: 200% 200%;
+        color: white;
+        box-shadow: 0 15px 35px rgba(59, 130, 246, 0.35),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+                    inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 15px 35px rgba(59, 130, 246, 0.35),
+                              inset 0 1px 2px rgba(255, 255, 255, 0.2); }
+        50% { box-shadow: 0 20px 45px rgba(59, 130, 246, 0.5),
+                         inset 0 1px 2px rgba(255, 255, 255, 0.3); }
+      }
+
+      .btn-primary::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+        animation: shine 3s infinite;
+        z-index: 1;
+      }
+
+      @keyframes shine {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(59, 130, 246, 0.45),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-primary:active {
+        transform: translateY(-1px) scale(0.98);
+      }
+
+      .btn-primary span {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Secondary Button */
+      .btn-secondary {
+        background: rgba(203, 213, 225, 0.1);
+        color: rgba(226, 232, 240, 0.95);
+        border: 1.5px solid rgba(148, 163, 184, 0.25);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .btn-secondary::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(59, 130, 246, 0.1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 0;
+      }
+
+      .btn-secondary:hover {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: rgba(59, 130, 246, 0.5);
+        color: #ffffff;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+      }
+
+      .btn-secondary span {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* User Badge */
+      .user-badge {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(168, 85, 247, 0.1) 100%);
+        border: 1.5px solid rgba(148, 163, 184, 0.2);
+        backdrop-filter: blur(15px);
+        animation: slideInDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes slideInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .user-badge svg {
+        filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.6));
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+
+      .user-badge-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .user-badge-label {
+        font-size: 0.75rem;
+        color: rgba(148, 163, 184, 0.7);
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+
+      .user-badge-email {
+        font-size: 0.85rem;
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: -0.3px;
+      }
+
+      /* Main Content */
+      main {
+        position: relative;
+        z-index: 10;
+        min-height: calc(100vh - 260px);
+      }
+
+      /* Alerts */
+      .alert-container {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        max-width: 450px;
+        z-index: 100;
+        animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(100px) scale(0.9) rotateY(45deg);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0) scale(1) rotateY(0deg);
+        }
+      }
+
+      .alert-box {
+        border-radius: 16px;
+        padding: 16px 20px;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .alert-success {
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);
+        border: 1px solid rgba(34, 197, 94, 0.4);
+      }
+
+      .alert-error {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+      }
+
+      .alert-icon {
+        flex-shrink: 0;
+        animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes popIn {
+        0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+        100% { transform: scale(1) rotate(0); opacity: 1; }
+      }
+
+      /* Footer */
+      footer {
+        position: relative;
+        z-index: 10;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(20, 30, 48, 0.8) 100%);
+        border-top: 1px solid rgba(148, 163, 184, 0.1);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 -25px 50px rgba(0, 0, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        animation: slideUp 0.7s cubic-bezier(0.23, 1, 0.320, 1);
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      footer::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.1), transparent 50%),
+                    radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.1), transparent 50%);
+        pointer-events: none;
+      }
+
+      /* Social Links */
+      footer a {
+        color: rgba(148, 163, 184, 0.7);
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        text-decoration: none;
+      }
+
+      footer a::before {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15));
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: -1;
+      }
+
+      footer a:hover {
+        color: #ffffff;
+        transform: translateY(-4px) scale(1.1);
+      }
+
+      footer a:hover::before {
+        opacity: 1;
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.5);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #3b82f6 0%, #7c3aed 100%);
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.3) inset;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #1e40af 0%, #6d28d9 100%);
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.4) inset;
       }
     </style>
   </head>
 
-  <body class="bg-gray-100 min-w-full">
-    <div class="min-h-screen w-full">
-      <header class="bg-white border-b py-4 shadow-sm">
-        <div class="w-full mx-auto flex flex-wrap items-center justify-between gap-4 px-4 max-w-full">
-          <div class="flex items-center gap-6">
-            <div>
-              <%= link_to "FluxLink", (logged_in? ? links_path : root_path), class: "text-lg font-semibold text-slate-900" %>
-            </div>
-            <nav class="hidden items-center gap-6 text-sm text-slate-700 md:flex">
-              <%= link_to "Home", root_path, class: "transition hover:text-slate-900" %>
-              <%= link_to "Features", features_path, class: "transition hover:text-slate-900" %>
-              <%= link_to "Pricing", pricing_path, class: "transition hover:text-slate-900" %>
-              <%= link_to "About", about_path, class: "transition hover:text-slate-900" %>
-              <%= link_to "Contact", contact_path, class: "transition hover:text-slate-900" %>
-            </nav>
-          </div>
-
-          <div class="flex items-center gap-4 text-sm text-slate-700">
-            <% if logged_in? %>
-              <span>Signed in as <strong><%= current_user.email %></strong></span>
-              <%= button_to "Logout", logout_path, method: :delete, class: "rounded-md bg-slate-900 px-3 py-2 text-white hover:bg-slate-800" %>
-            <% else %>
-              <%= link_to "Login", login_path, class: "rounded-full border border-slate-300 bg-white px-4 py-2 text-slate-700 transition hover:bg-slate-50" %>
-              <%= link_to "Sign Up", signup_path, class: "rounded-full bg-sky-500 px-4 py-2 text-white transition hover:bg-sky-400" %>
+  <body class="min-w-full">
+    <!-- Fixed Header Navigation -->
+    <header>
+      <div class="header-content max-w-full px-4 sm:px-6 lg:px-8">
+        
+        <!-- Logo & Brand -->
+        <div class="flex items-center gap-12 flex-1">
+          <div class="logo-container group">
+            <%= link_to (logged_in? ? links_path : root_path), class: "flex items-center gap-3", data: { transition: true } do %>
+              <div class="logo-icon">
+                <span class="text-2xl font-bold text-white relative z-10">⚡</span>
+              </div>
+              <span class="logo-text hidden sm:inline">FluxLink</span>
             <% end %>
           </div>
+
+          <!-- Navigation (Desktop) -->
+          <% unless logged_in? %>
+            <nav class="hidden lg:flex items-center">
+              <%= link_to "Home", root_path, data: { transition: true } %>
+              <%= link_to "Features", features_path, data: { transition: true } %>
+              <%= link_to "Pricing", pricing_path, data: { transition: true } %>
+              <%= link_to "About", about_path, data: { transition: true } %>
+              <%= link_to "Contact", contact_path, data: { transition: true } %>
+            </nav>
+          <% end %>
         </div>
-      </header>
 
-      <div id="page-transition-wrapper" class="w-full mx-auto px-4 py-8 max-w-full">
-        <% if notice %>
-          <div class="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-green-800">
-            <%= notice %>
-          </div>
-        <% end %>
+        <!-- Right Side Actions -->
+        <div class="auth-buttons">
+          <% if logged_in? %>
+            <!-- User Info Badge -->
+            <div class="user-badge hidden md:flex">
+              <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+              <div class="user-badge-text">
+                <span class="user-badge-label">Signed in as</span>
+                <span class="user-badge-email"><%= current_user.email %></span>
+              </div>
+            </div>
 
-        <% if alert %>
-          <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-800">
-            <%= alert %>
-          </div>
-        <% end %>
+            <!-- Dashboard Link -->
+            <%= link_to "📊 Dashboard", links_path, class: "btn btn-secondary hidden sm:inline-flex", data: { transition: true } %>
 
-        <%= yield %>
+            <!-- Logout -->
+            <%= button_to "🚪 Logout", logout_path, method: :delete, class: "btn btn-primary !bg-gradient-to-r !from-red-500 !to-pink-600 !shadow-lg !shadow-red-500/25" %>
+          <% else %>
+            <!-- Login -->
+            <%= link_to "Sign In", login_path, class: "btn btn-secondary", data: { transition: true } %>
+
+            <!-- Sign Up (CTA) -->
+            <%= link_to "Get Started", signup_path, class: "btn btn-primary", data: { transition: true } %>
+          <% end %>
+        </div>
       </div>
+    </header>
+
+    <!-- Main Page Wrapper -->
+    <div id="page-transition-wrapper" class="w-full mx-auto max-w-full">
+      <main class="w-full">
+        <!-- Success Alert -->
+        <% if notice.present? %>
+          <div class="alert-container">
+            <div class="alert-box alert-success">
+              <svg class="alert-icon w-5 h-5 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <p class="text-sm font-medium text-green-300"><%= notice %></p>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Error Alert -->
+        <% if alert.present? %>
+          <div class="alert-container">
+            <div class="alert-box alert-error">
+              <svg class="alert-icon w-5 h-5 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+              </svg>
+              <p class="text-sm font-medium text-red-300"><%= alert %></p>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Page Content -->
+        <%= yield %>
+      </main>
     </div>
+
+    <!-- Premium Footer -->
+    <footer>
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid gap-12 md:grid-cols-4 mb-12">
+          
+          <!-- Brand Section -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
+                <span class="text-lg font-bold text-white">⚡</span>
+              </div>
+              <span class="font-bold text-white text-lg">FluxLink</span>
+            </div>
+            <p class="text-sm text-slate-400 leading-relaxed">Smart URL shortening for modern teams and creators.</p>
+            <div class="flex items-center gap-2 pt-2">
+              <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+              <span class="text-xs text-slate-500">System Operational</span>
+            </div>
+          </div>
+
+          <!-- Product Links -->
+          <div class="space-y-4">
+            <h4 class="font-bold text-white uppercase tracking-wider text-xs">Product</h4>
+            <ul class="space-y-3 text-sm">
+              <li><%= link_to "Features", features_path, class: "text-slate-400 hover:text-white", data: { transition: true } %></li>
+              <li><%= link_to "Pricing", pricing_path, class: "text-slate-400 hover:text-white", data: { transition: true } %></li>
+              <li><a href="#" class="text-slate-400 hover:text-white">API Docs</a></li>
+              <li><a href="#" class="text-slate-400 hover:text-white">Changelog</a></li>
+            </ul>
+          </div>
+
+          <!-- Company Links -->
+          <div class="space-y-4">
+            <h4 class="font-bold text-white uppercase tracking-wider text-xs">Company</h4>
+            <ul class="space-y-3 text-sm">
+              <li><%= link_to "About", about_path, class: "text-slate-400 hover:text-white", data: { transition: true } %></li>
+              <li><%= link_to "Contact", contact_path, class: "text-slate-400 hover:text-white", data: { transition: true } %></li>
+              <li><a href="#" class="text-slate-400 hover:text-white">Blog</a></li>
+              <li><a href="#" class="text-slate-400 hover:text-white">Status</a></li>
+            </ul>
+          </div>
+
+          <!-- Legal Links -->
+          <div class="space-y-4">
+            <h4 class="font-bold text-white uppercase tracking-wider text-xs">Legal</h4>
+            <ul class="space-y-3 text-sm">
+              <li><a href="#" class="text-slate-400 hover:text-white">Privacy Policy</a></li>
+              <li><a href="#" class="text-slate-400 hover:text-white">Terms of Service</a></li>
+              <li><a href="#" class="text-slate-400 hover:text-white">Security</a></li>
+              <li><a href="#" class="text-slate-400 hover:text-white">Cookies</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="border-t border-slate-800/50 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <p class="text-sm text-slate-500">© 2024 FluxLink. All rights reserved. Built with ❤️</p>
+          <div class="flex items-center gap-4">
+            <a href="#" class="group">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7z"/></svg>
+            </a>
+            <a href="#" class="group">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 22c-5.514 0-10-4.486-10-10s4.486-10 10-10 10 4.486 10 10-4.486 10-10 10z"/></svg>
+            </a>
+            <a href="#" class="group">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Transition Overlay -->
+    <div id="transition-overlay"></div>
+
+    <!-- Page Transition Script -->
     <script>
       function initPageTransitions() {
         const wrapper = document.getElementById('page-transition-wrapper');
@@ -131,7 +792,7 @@
 
           setTimeout(() => {
             window.location = link.href;
-          }, 280);
+          }, 350);
         }, true);
       }
 

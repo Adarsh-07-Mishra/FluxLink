@@ -1,18 +1,287 @@
-<div class="min-h-screen bg-slate-950 text-slate-100 px-6 py-16 lg:px-12">
-  <div class="mx-auto max-w-6xl">
-    <div class="mb-12 rounded-[32px] bg-slate-900/90 p-10 ring-1 ring-white/10 shadow-[0_25px_80px_rgba(15,23,42,0.35)] backdrop-blur-xl">
-      <p class="text-sm uppercase tracking-[0.3em] text-sky-400">Features</p>
-      <h1 class="mt-4 text-4xl font-semibold tracking-tight text-white">Everything your short-link workflow needs.</h1>
-      <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-300">Designed to shorten URLs quickly, protect them privately, and give you instant visibility into every click.</p>
-    </div>
-
-    <div class="grid gap-6 lg:grid-cols-3">
-      <% [{title: 'Branded short links', body: 'Create clean short URLs with optional custom aliases.'}, {title: 'Password protection', body: 'Lock links behind a password for private sharing.'}, {title: 'QR codes included', body: 'Generate a scannable QR code with every link.'}, {title: 'Click analytics', body: 'Track how your links perform over time.'}, {title: 'Link management', body: 'Edit, delete, and monitor links from one dashboard.'}, {title: 'Fast access', body: 'Start shortening with the homepage form instantly.'}].each do |feature| %>
-        <div class="rounded-[28px] bg-white/5 p-8 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(15,23,42,0.18)]">
-          <p class="text-sm uppercase tracking-[0.3em] text-sky-300"><%= feature[:title] %></p>
-          <p class="mt-4 text-lg font-semibold text-white"><%= feature[:body] %></p>
-        </div>
-      <% end %>
-    </div>
+<div class="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+  
+  <!-- Animated background gradients -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 left-1/4 w-80 h-80 bg-blue-500/30 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+    <div class="absolute top-1/3 -right-20 w-96 h-96 bg-purple-500/25 rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute -bottom-32 left-1/2 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl opacity-20 -translate-x-1/2 animate-pulse" style="animation-delay: 4s;"></div>
   </div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+
+    <!-- ================= HEADER SECTION ================= -->
+    <section class="mb-20">
+      <div class="rounded-3xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 shadow-2xl p-8 md:p-12 lg:p-16">
+        <div class="space-y-6 max-w-3xl">
+          <div class="inline-flex">
+            <span class="rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-blue-300 border border-blue-400/20 backdrop-blur-sm">
+              ✨ Powerful Features
+            </span>
+          </div>
+
+          <div class="space-y-4">
+            <h1 class="text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+              Everything you need to 
+              <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">manage short links</span>
+            </h1>
+            <p class="text-xl text-slate-300 leading-relaxed max-w-2xl">
+              Designed for creators and teams who demand speed, security, and control. Create, protect, track, and share with confidence.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="flex flex-wrap gap-3 pt-4">
+            <a href="#core-features" class="inline-flex items-center gap-2 rounded-full bg-blue-600/20 border border-blue-400/30 px-5 py-2 text-sm font-semibold text-blue-300 hover:bg-blue-600/30 transition">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM15 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2h-2zM5 13a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM15 13a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z" />
+              </svg>
+              Core Features
+            </a>
+            <a href="#advanced-features" class="inline-flex items-center gap-2 rounded-full bg-purple-600/20 border border-purple-400/30 px-5 py-2 text-sm font-semibold text-purple-300 hover:bg-purple-600/30 transition">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v4h8v-4zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+              </svg>
+              Advanced Tools
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CORE FEATURES SECTION ================= -->
+    <section id="core-features" class="mb-24">
+      <div class="space-y-8">
+        <div class="space-y-2">
+          <p class="text-sm uppercase tracking-widest text-blue-400 font-semibold">Core Features</p>
+          <h2 class="text-4xl font-bold text-white">Build with power and speed</h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <% [
+            { 
+              icon: '🔗', 
+              title: 'Branded Short Links', 
+              desc: 'Create clean, memorable short URLs with custom aliases. Make your links match your brand identity.' 
+            },
+            { 
+              icon: '🔐', 
+              title: 'Password Protection', 
+              desc: 'Lock any link behind a password for private sharing. Control who accesses your content.' 
+            },
+            { 
+              icon: '📱', 
+              title: 'QR Code Generation', 
+              desc: 'Automatically generate scannable QR codes for every short link. Print or share instantly.' 
+            },
+            { 
+              icon: '📊', 
+              title: 'Click Analytics', 
+              desc: 'Track real-time click data and monitor link performance. See exactly how your links perform.' 
+            },
+            { 
+              icon: '⚙️', 
+              title: 'Link Management', 
+              desc: 'Edit, pause, or delete links from your dashboard. Complete control over all your URLs.' 
+            },
+            { 
+              icon: '⚡', 
+              title: 'Instant Creation', 
+              desc: 'Start shortening links in seconds from the homepage. No signup required to get started.' 
+            }
+          ].each do |feature| %>
+            <div class="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 hover:border-blue-400/50 hover:from-slate-800/60 hover:to-slate-900/60 transition duration-300">
+              <div class="text-4xl mb-4"><%= feature[:icon] %></div>
+              <h3 class="text-xl font-bold text-white mb-3"><%= feature[:title] %></h3>
+              <p class="text-slate-400 leading-relaxed"><%= feature[:desc] %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ADVANCED FEATURES SECTION ================= -->
+    <section id="advanced-features" class="mb-24">
+      <div class="space-y-8">
+        <div class="space-y-2">
+          <p class="text-sm uppercase tracking-widest text-purple-400 font-semibold">Advanced Tools</p>
+          <h2 class="text-4xl font-bold text-white">Go beyond the basics</h2>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          <% [
+            { 
+              icon: '⏰', 
+              title: 'Link Expiration', 
+              desc: 'Set expiration dates for temporary links. Perfect for limited-time offers and time-sensitive content.',
+              items: ['Auto-extending links', 'Custom expiry dates', 'Expired link management']
+            },
+            { 
+              icon: '📈', 
+              title: 'Performance Tracking', 
+              desc: 'Get detailed insights into how your links perform. Track clicks, trends, and patterns over time.',
+              items: ['Real-time analytics', 'Historical data', 'Performance trends']
+            },
+            { 
+              icon: '🎯', 
+              title: 'Custom Domains', 
+              desc: 'Use your own domain for branded short links. Build trust and maintain brand consistency.',
+              items: ['Domain integration', 'SSL support', 'Custom routing']
+            },
+            { 
+              icon: '🔄', 
+              title: 'Bulk Operations', 
+              desc: 'Manage multiple links at once. Create, update, or delete in batch for maximum efficiency.',
+              items: ['Batch creation', 'Bulk editing', 'Mass deletion']
+            }
+          ].each do |feature| %>
+            <div class="group bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 hover:border-purple-400/50 transition duration-300">
+              <div class="flex items-start gap-4 mb-6">
+                <span class="text-4xl flex-shrink-0"><%= feature[:icon] %></span>
+                <div>
+                  <h3 class="text-2xl font-bold text-white"><%= feature[:title] %></h3>
+                  <p class="text-slate-400 mt-2"><%= feature[:desc] %></p>
+                </div>
+              </div>
+              
+              <ul class="space-y-3 pt-4 border-t border-slate-600">
+                <% feature[:items].each do |item| %>
+                  <li class="flex items-center gap-3 text-slate-300">
+                    <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <%= item %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= COMPARISON SECTION ================= -->
+    <section class="mb-24">
+      <div class="space-y-8">
+        <div class="text-center space-y-4">
+          <p class="text-sm uppercase tracking-widest text-blue-400 font-semibold">Why Choose Us</p>
+          <h2 class="text-4xl font-bold text-white">The complete link management solution</h2>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-slate-300">
+              <thead class="bg-slate-800/50">
+                <tr class="border-b border-slate-700">
+                  <th class="text-left px-6 py-4 font-semibold text-white">Feature</th>
+                  <th class="text-center px-6 py-4 font-semibold text-blue-400">FluxLink</th>
+                  <th class="text-center px-6 py-4 font-semibold text-slate-400">Others</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-700">
+                <% [
+                  { feature: 'Custom Short Codes', fluxlink: true, others: false },
+                  { feature: 'Password Protection', fluxlink: true, others: false },
+                  { feature: 'QR Code Generation', fluxlink: true, others: true },
+                  { feature: 'Click Analytics', fluxlink: true, others: true },
+                  { feature: 'Link Expiration', fluxlink: true, others: false },
+                  { feature: 'Bulk Operations', fluxlink: true, others: false },
+                  { feature: 'Custom Domains', fluxlink: true, others: true },
+                  { feature: 'API Access', fluxlink: true, others: false }
+                ].each do |row| %>
+                  <tr class="hover:bg-slate-800/30 transition">
+                    <td class="px-6 py-4 font-medium text-white"><%= row[:feature] %></td>
+                    <td class="text-center px-6 py-4">
+                      <% if row[:fluxlink] %>
+                        <svg class="w-5 h-5 text-green-400 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                      <% else %>
+                        <span class="text-slate-500">—</span>
+                      <% end %>
+                    </td>
+                    <td class="text-center px-6 py-4">
+                      <% if row[:others] %>
+                        <svg class="w-5 h-5 text-green-400 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                      <% else %>
+                        <span class="text-slate-500">—</span>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WORKFLOW SECTION ================= -->
+    <section class="mb-24">
+      <div class="space-y-8">
+        <div class="text-center space-y-4">
+          <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">How It Works</p>
+          <h2 class="text-4xl font-bold text-white">Simple, powerful workflow</h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-4">
+          <% [
+            { num: '01', title: 'Paste', desc: 'Enter your long URL into the form' },
+            { num: '02', title: 'Customize', desc: 'Add password, QR, or expiration' },
+            { num: '03', title: 'Create', desc: 'Get your short link instantly' },
+            { num: '04', title: 'Track', desc: 'Monitor clicks and analytics' }
+          ].each do |step| %>
+            <div class="relative">
+              <div class="bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 text-center hover:border-cyan-400/50 transition duration-300">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">
+                  <%= step[:num] %>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2"><%= step[:title] %></h3>
+                <p class="text-slate-400 text-sm"><%= step[:desc] %></p>
+              </div>
+              
+              <% if step[:num] != '04' %>
+                <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2">
+                  <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA SECTION ================= -->
+    <section class="bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 backdrop-blur-sm border border-slate-700/50 rounded-3xl p-12 text-center">
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <p class="text-sm uppercase tracking-widest text-blue-400 font-semibold">Ready to get started?</p>
+          <h2 class="text-4xl lg:text-5xl font-bold text-white">Experience the difference</h2>
+          <p class="text-lg text-slate-300 max-w-2xl mx-auto">Join thousands of creators and teams who trust FluxLink for secure, powerful URL shortening.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 items-center justify-center pt-4">
+          <%= link_to "Start Free Today", signup_path, class: "inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:from-blue-700 hover:to-purple-700 transition duration-300 hover:scale-105" %>
+          <%= link_to "View Dashboard", links_path, class: "inline-flex items-center justify-center rounded-xl border-2 border-slate-500/50 bg-slate-800/50 backdrop-blur-sm px-8 py-4 text-base font-semibold text-white hover:border-blue-400 hover:bg-slate-700/50 transition duration-300" %>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
 </div>
+
+<!-- CSS Animations -->
+<style>
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  
+  .animate-pulse {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+</style>

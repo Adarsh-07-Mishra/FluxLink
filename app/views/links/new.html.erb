@@ -1,97 +1,224 @@
-<div class="min-h-screen bg-slate-50 px-4 py-12">
-  <div class="mx-auto max-w-6xl grid gap-10 lg:grid-cols-[1.1fr_.9fr]">
-    <div class="rounded-[32px] bg-gradient-to-br from-sky-600 to-indigo-700 p-10 text-white shadow-2xl">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-100 px-4 py-12">
+  <div class="mx-auto max-w-6xl">
+
+    <!-- Header -->
+    <div class="mb-12 text-center">
+      <p class="text-sm uppercase tracking-widest text-blue-600 font-semibold mb-3">Create New Link</p>
+      <h1 class="text-5xl font-bold text-slate-900 mb-4">Shorten Your URL</h1>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto">Create a powerful short link with advanced features like password protection, QR codes, and expiration dates.</p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-[1.2fr_.8fr]">
+
+      <!-- LEFT SIDE - Info Cards -->
       <div class="space-y-6">
-        <span class="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[.24em] text-slate-100">Modern shortening</span>
-        <div>
-          <h1 class="text-4xl font-semibold tracking-tight">Create a short URL in seconds</h1>
-          <p class="mt-4 text-sm leading-6 text-slate-200 max-w-xl">Just paste your destination URL and pick the settings you need. Smart defaults keep the experience fast and simple.</p>
-        </div>
-        <div class="grid gap-4">
-          <div class="rounded-[28px] bg-white/10 p-5">
-            <p class="font-semibold text-slate-100">Fast setup</p>
-            <p class="mt-2 text-sm text-slate-300">No extra steps — only the fields that matter.</p>
-          </div>
-          <div class="rounded-[28px] bg-white/10 p-5">
-            <p class="font-semibold text-slate-100">Built for sharing</p>
-            <p class="mt-2 text-sm text-slate-300">Optional password and QR code support for private distribution.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="rounded-[32px] bg-white p-10 shadow-2xl ring-1 ring-slate-200">
-      <div class="mb-8">
-        <h2 class="text-3xl font-semibold text-slate-900">Shorten your link</h2>
-        <p class="mt-2 text-sm text-slate-500">Minimal form, powerful outcome.</p>
-      </div>
+        <!-- Main Feature Card -->
+        <div class="bg-gradient-to-br from-blue-600 via-blue-600 to-purple-700 rounded-3xl p-10 text-white shadow-2xl overflow-hidden relative">
+          <!-- Decorative elements -->
+          <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
 
-      <% if @link.errors.any? %>
-        <div class="rounded-3xl border border-red-200 bg-red-50 p-4 mb-6 text-sm text-red-700">
-          <ul class="list-disc pl-5 space-y-1">
-            <% @link.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <%= form_with model: @link, data: { turbo: false }, class: "space-y-6" do |f| %>
-        <div>
-          <%= f.label :original_url, "Paste your URL", class: "block text-sm font-semibold text-slate-700 mb-3" %>
-          <div class="relative">
-            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">https://</span>
-            <%= f.url_field :original_url,
-                class: "w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 pl-24 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20",
-                placeholder: "example.com/page" %>
-          </div>
-        </div>
-
-        <div class="grid gap-5 lg:grid-cols-2">
-          <div>
-            <%= f.label :short_code, "Custom alias", class: "block text-sm font-semibold text-slate-700 mb-3" %>
-            <div class="rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 shadow-sm">
-              <%= f.text_field :short_code, class: "w-full bg-transparent text-sm text-slate-900 focus:outline-none", placeholder: "optional" %>
+          <div class="relative space-y-8">
+            <div>
+              <span class="inline-flex rounded-full bg-white/20 backdrop-blur-lg px-4 py-2 text-xs font-semibold uppercase tracking-widest text-blue-100 border border-white/20 mb-4">⚡ Instant Creation</span>
+              <h2 class="text-3xl font-bold mb-3">Lightning Fast Setup</h2>
+              <p class="text-blue-100 leading-relaxed">Paste your URL and you're done. Optional features are just a click away.</p>
             </div>
-          </div>
 
-          <div>
-            <%= f.label :expires_at, "Expires at", class: "block text-sm font-semibold text-slate-700 mb-3" %>
-            <div class="rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 shadow-sm">
-              <%= f.datetime_local_field :expires_at,
-                  value: (@link.expires_at&.strftime("%Y-%m-%dT%H:%M")),
-                  class: "w-full bg-transparent text-sm text-slate-900 focus:outline-none",
-                  placeholder: "Optional" %>
+            <!-- Features Grid -->
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 hover:bg-white/20 transition">
+                <div class="text-2xl mb-2">🔒</div>
+                <p class="text-sm font-semibold">Password Protect</p>
+                <p class="text-xs text-blue-200 mt-1">Secure with a password</p>
+              </div>
+
+              <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 hover:bg-white/20 transition">
+                <div class="text-2xl mb-2">📱</div>
+                <p class="text-sm font-semibold">QR Codes</p>
+                <p class="text-xs text-blue-200 mt-1">Scannable links</p>
+              </div>
+
+              <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 hover:bg-white/20 transition">
+                <div class="text-2xl mb-2">⏰</div>
+                <p class="text-sm font-semibold">Expiration</p>
+                <p class="text-xs text-blue-200 mt-1">Set expiry dates</p>
+              </div>
+
+              <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 hover:bg-white/20 transition">
+                <div class="text-2xl mb-2">✨</div>
+                <p class="text-sm font-semibold">Custom Code</p>
+                <p class="text-xs text-blue-200 mt-1">Brand your links</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div>
-          <%= f.label :password, "Password lock", class: "block text-sm font-semibold text-slate-700 mb-3" %>
-          <div class="rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 shadow-sm">
-            <%= f.password_field :password,
-                class: "w-full bg-transparent text-sm text-slate-900 focus:outline-none",
-                placeholder: "optional" %>
+        <!-- Stats Card -->
+        <div class="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-lg border border-white/20">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-slate-600 font-medium">Quick Stats</p>
+                <p class="text-2xl font-bold text-slate-900">Create in Seconds</p>
+              </div>
+              <div class="text-4xl">⚡</div>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">No complicated setup. No hidden costs. Just simple, fast URL shortening with powerful features.</p>
           </div>
         </div>
 
-        <div class="rounded-[28px] border border-slate-200 bg-slate-50 p-4 flex items-center justify-between gap-4">
+      </div>
+
+      <!-- RIGHT SIDE - Form -->
+      <div class="bg-white/85 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 md:p-10 h-fit sticky top-8">
+        <h3 class="text-2xl font-bold text-slate-900 mb-2">New Short Link</h3>
+        <p class="text-slate-500 text-sm mb-8">Fill in the details below to create your short link</p>
+
+        <!-- Error Messages -->
+        <% if @link.errors.any? %>
+          <div class="mb-6 bg-red-50 border-2 border-red-200 rounded-2xl p-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+              </svg>
+              <div>
+                <p class="font-semibold text-red-800 mb-2">Fix the errors below:</p>
+                <ul class="space-y-1">
+                  <% @link.errors.full_messages.each do |message| %>
+                    <li class="text-sm text-red-700">• <%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Form -->
+        <%= form_with model: @link, data: { turbo: false }, class: "space-y-6" do |f| %>
+
+          <!-- Original URL -->
           <div>
-            <p class="text-sm font-semibold text-slate-900">Generate QR code</p>
-            <p class="text-sm text-slate-500">Instantly create a scannable link.</p>
+            <%= f.label :original_url, "Destination URL", class: "block text-sm font-semibold text-slate-700 mb-3" %>
+            <div class="relative">
+              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 text-sm font-medium">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+              </span>
+              <%= f.url_field :original_url,
+                  class: "w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 pl-14 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-blue-50/30 focus:ring-2 focus:ring-blue-400/30 transition duration-200",
+                  placeholder: "https://example.com/page" %>
+            </div>
           </div>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <%= f.check_box :generate_qr, { class: "sr-only peer" }, true, false %>
-            <span class="w-14 h-7 rounded-full bg-slate-300 peer-checked:bg-sky-500 transition-all duration-200"></span>
-            <span class="absolute left-1 top-1 h-5 w-5 rounded-full bg-white shadow transform transition peer-checked:translate-x-7"></span>
-          </label>
+
+          <!-- Short Code & Expiry Row -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Custom Short Code -->
+            <div>
+              <%= f.label :short_code, "Custom Code", class: "block text-sm font-semibold text-slate-700 mb-3" %>
+              <div class="relative">
+                <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 text-sm font-medium">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M5 9V7a1 1 0 011-1h6V4a1 1 0 10-1.999 0v2H6V4a1 1 0 10-2 0v2H2a1 1 0 00-1 1v2a1 1 0 001 1h1v4H2a1 1 0 100 2h1v2a1 1 0 001 1h2v2a1 1 0 101.999 0v-2h6v2a1 1 0 102 0v-2h2a1 1 0 001-1v-2a1 1 0 00-1-1h-1V9h1a1 1 0 100-2h-1V5a1 1 0 00-1-1h-2V2a1 1 0 10-1.999 0v2H6V2a1 1 0 10-2 0v2H2a1 1 0 00-1 1v2a1 1 0 001 1h1z" />
+                  </svg>
+                </span>
+                <%= f.text_field :short_code, 
+                    class: "w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 pl-10 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-blue-50/30 focus:ring-2 focus:ring-blue-400/30 transition duration-200",
+                    placeholder: "optional" %>
+              </div>
+              <p class="text-xs text-slate-500 mt-2">Leave blank for auto-generated</p>
+            </div>
+
+            <!-- Expiry -->
+            <div>
+              <%= f.label :expires_at, "Expiry Date", class: "block text-sm font-semibold text-slate-700 mb-3" %>
+              <div class="relative">
+                <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 text-sm font-medium">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v2h16V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h12a1 1 0 100-2H6z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                <%= f.datetime_local_field :expires_at,
+                    value: (@link.expires_at&.strftime("%Y-%m-%dT%H:%M")),
+                    class: "w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 pl-10 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-blue-50/30 focus:ring-2 focus:ring-blue-400/30 transition duration-200",
+                    placeholder: "optional" %>
+              </div>
+              <p class="text-xs text-slate-500 mt-2">Auto-extend if not set</p>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div>
+            <%= f.label :password, "Password Lock", class: "block text-sm font-semibold text-slate-700 mb-3" %>
+            <div class="relative">
+              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 text-sm font-medium">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              <%= f.password_field :password,
+                  class: "w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 pl-10 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-blue-50/30 focus:ring-2 focus:ring-blue-400/30 transition duration-200",
+                  placeholder: "optional" %>
+            </div>
+            <p class="text-xs text-slate-500 mt-2">Visitors must enter this to access the link</p>
+          </div>
+
+          <!-- QR Code Toggle -->
+          <div class="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-100 rounded-2xl p-5 flex items-center justify-between gap-4">
+            <div>
+              <p class="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zm0 6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z" />
+                </svg>
+                Generate QR Code
+              </p>
+              <p class="text-xs text-slate-600 mt-1">Create a scannable link automatically</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+              <%= f.check_box :generate_qr, { class: "sr-only peer" }, true, false %>
+              <div class="w-14 h-8 bg-slate-300 peer-checked:bg-gradient-to-r peer-checked:from-blue-500 peer-checked:to-purple-500 rounded-full transition-all duration-300 shadow-md"></div>
+              <div class="absolute left-1 top-1 h-6 w-6 rounded-full bg-white shadow-lg transform transition-transform duration-300 peer-checked:translate-x-6"></div>
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <div>
+            <%= f.submit "Create Short Link",
+                class: "w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition duration-200 active:scale-95 flex items-center justify-center gap-2" %>
+          </div>
+
+        <% end %>
+
+        <!-- Alternative -->
+        <div class="text-center pt-6 border-t border-slate-200">
+          <p class="text-sm text-slate-600">
+            <%= link_to "← Back to Dashboard", links_path, class: "text-blue-600 hover:text-blue-700 font-semibold transition" %>
+          </p>
         </div>
 
-        <div>
-          <%= f.submit "Create Short Link",
-              class: "w-full rounded-3xl bg-gradient-to-r from-sky-600 to-indigo-600 py-4 text-sm font-semibold text-white shadow-xl shadow-sky-500/20 transition hover:scale-[1.01] hover:from-sky-700 hover:to-indigo-700" %>
-        </div>
-      <% end %>
+      </div>
+
     </div>
+
   </div>
 </div>
+
+<!-- CSS for smooth animations -->
+<style>
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.5s ease-out;
+  }
+</style>

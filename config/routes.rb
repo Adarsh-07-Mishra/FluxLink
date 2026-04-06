@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :links do
     member do
       patch :update_qr
+      patch :toggle_active
     end
   end
 

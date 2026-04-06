@@ -43,13 +43,14 @@ class LinksController < ApplicationController
       @clicks_chart_labels = (0...days).map { |i| (@link.created_at.to_date + i).strftime("%d %b") }
       @clicks_chart_data = clicks_per_day
     end
-  
-    # 🔗 Redirect logic
+
     def redirect
       @link = Link.find_by!(short_code: params[:short_code])
-  
-      if @link.expired?
-        render plain: "Link expired"
+
+      if @link.inactive?
+        render plain: "🚫 This link has been disabled"
+      elsif @link.expired?
+        render plain: "⏰ Link expired"
       elsif @link.password_digest.present?
         render :password
       else
@@ -57,7 +58,14 @@ class LinksController < ApplicationController
         redirect_to @link.original_url, allow_other_host: true
       end
     end
-  
+
+    def toggle_active
+      @link = current_user.links.find(params[:id])
+      @link.update(active: !@link.active)
+
+      redirect_to links_path, notice: "Link status updated!"
+    end
+
     # 🔐 Unlock with password
     def unlock
       @link = Link.find_by!(short_code: params[:short_code])

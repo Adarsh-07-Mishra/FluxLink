@@ -7,6 +7,8 @@ class Link < ApplicationRecord
   
     before_validation :set_and_normalize_short_code, on: :create
     before_validation :normalize_original_url
+    before_create :set_default_active
+
   
     validates :original_url, presence: true
     validate  :validate_original_url_format
@@ -30,6 +32,14 @@ class Link < ApplicationRecord
     def generate_qr_code(url)
       self.qr_code_data = RQRCode::QRCode.new(url).as_svg(module_size: 5)
       save
+    end
+
+     def active?
+      active == true
+    end
+
+    def inactive?
+      !active?
     end
   
     private
@@ -64,5 +74,11 @@ class Link < ApplicationRecord
         errors.add(:original_url, "must be a valid URL starting with http:// or https://")
       end
     end
+
+    def set_default_active
+      self.active = true if active.nil?
+    end
+
+   
   end
   

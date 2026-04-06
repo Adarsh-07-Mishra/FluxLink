@@ -1,92 +1,225 @@
-<div class="min-h-screen bg-slate-50 text-slate-900 p-6">
-  <div class="mx-auto max-w-7xl">
-    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-8">
-      <div>
-        <p class="text-sm uppercase tracking-[0.3em] text-sky-400">My links</p>
-        <h1 class="mt-3 text-4xl font-semibold tracking-tight text-slate-900">Dashboard</h1>
-        <p class="mt-2 max-w-2xl text-slate-600">Manage your private short URLs, review performance, and create secure links with ease.</p>
-      </div>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-100 p-8">
 
-      <%= link_to "+ New Link",
-          new_link_path,
-          class: "inline-flex items-center justify-center rounded-3xl bg-gradient-to-r from-sky-500 to-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:scale-[1.01]" %>
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">📊 Dashboard</h1>
+      <p class="text-gray-500 mt-2 text-base">Manage your short links elegantly</p>
     </div>
 
-    <div class="grid gap-6 md:grid-cols-3 mb-10">
-      <div class="rounded-[28px] bg-white p-6 ring-1 ring-slate-200 shadow-xl">
-        <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Total links</p>
-        <p class="mt-4 text-4xl font-semibold text-slate-900"><%= @links.count %></p>
-        <p class="mt-3 text-sm text-slate-400">Links created by you.</p>
-      </div>
-      <div class="rounded-[28px] bg-white p-6 ring-1 ring-slate-200 shadow-xl">
-        <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Total clicks</p>
-        <p class="mt-4 text-4xl font-semibold text-slate-900"><%= @links.sum(:clicks) %></p>
-        <p class="mt-3 text-sm text-slate-400">All clicks across your links.</p>
-      </div>
-      <div class="rounded-[28px] bg-white p-6 ring-1 ring-slate-200 shadow-xl">
-        <p class="text-sm uppercase tracking-[0.3em] text-slate-500">Active links</p>
-        <p class="mt-4 text-4xl font-semibold text-slate-900"><%= @links.reject(&:expired?).count %></p>
-        <p class="mt-3 text-sm text-slate-400">Links that are still valid.</p>
+    <%= link_to "+ New Link", new_link_path, class: "inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition duration-200" %>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+
+    <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-blue-100/50 hover:shadow-xl transition duration-200">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm font-medium mb-2">Total Links</p>
+          <p class="text-4xl font-bold text-blue-600"><%= @links.count %></p>
+        </div>
+        <div class="text-5xl opacity-20">🔗</div>
       </div>
     </div>
 
-    <% if @links.any? %>
-      <div class="grid gap-6 lg:grid-cols-2">
-        <% @links.each do |link| %>
-          <div class="overflow-hidden rounded-[32px] bg-white ring-1 ring-slate-200 p-6 shadow-xl transition hover:-translate-y-1">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p class="text-sm text-slate-400">Short URL</p>
-                <%= link_to short_url(link.short_code), short_url(link.short_code), target: "_blank", class: "mt-2 block text-lg font-semibold text-sky-300 hover:text-sky-200 underline" %>
-              </div>
-              <div class="inline-flex items-center gap-2 rounded-full bg-slate-800 px-3 py-2 text-sm text-slate-300">
-                <% if link.expired? %>
-                  <span class="rounded-full bg-red-600/20 px-3 py-1 text-red-200">Expired</span>
-                <% else %>
-                  <span class="rounded-full bg-sky-500/20 px-3 py-1 text-sky-200">Active</span>
-                <% end %>
-                <span class="text-slate-500">|</span>
-                <span><strong><%= link.clicks %></strong> clicks</span>
-              </div>
-            </div>
+    <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-green-100/50 hover:shadow-xl transition duration-200">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm font-medium mb-2">Total Clicks</p>
+          <p class="text-4xl font-bold text-green-600"><%= @links.sum(:clicks) %></p>
+        </div>
+        <div class="text-5xl opacity-20">📈</div>
+      </div>
+    </div>
 
-            <div class="mt-5 rounded-3xl bg-slate-50 p-5 ring-1 ring-slate-200">
-              <p class="text-sm text-slate-400">Original URL</p>
-              <a href="<%= link.original_url %>" target="_blank" class="mt-2 block text-slate-700 line-clamp-2 hover:text-sky-500"><%= link.original_url %></a>
-            </div>
+    <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-purple-100/50 hover:shadow-xl transition duration-200">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm font-medium mb-2">Active Links</p>
+          <p class="text-4xl font-bold text-purple-600"><%= @links.select(&:active?).count %></p>
+        </div>
+        <div class="text-5xl opacity-20">✅</div>
+      </div>
+    </div>
 
-            <div class="mt-6 grid gap-3 sm:grid-cols-3">
-              <div class="rounded-3xl bg-slate-50 p-4 text-sm text-slate-600">
-                <p class="text-slate-500">Created</p>
-                <p class="mt-2 font-semibold text-slate-900"><%= link.created_at.strftime("%d %b %Y") %></p>
-              </div>
-              <div class="rounded-3xl bg-slate-50 p-4 text-sm text-slate-600">
-                <p class="text-slate-500">Expiry</p>
-                <p class="mt-2 font-semibold text-slate-900"><%= link.expires_at.present? ? link.expires_at.strftime("%d %b %Y") : "None" %></p>
-              </div>
-              <div class="rounded-3xl bg-slate-50 p-4 text-sm text-slate-600">
-                <p class="text-slate-500">QR</p>
-                <p class="mt-2 font-semibold text-slate-900"><%= link.qr_code_data.present? ? "Enabled" : "Disabled" %></p>
-              </div>
-            </div>
+  </div>
 
-            <div class="mt-6 flex flex-wrap gap-3">
-              <%= link_to "View",
-                    link_path(link),
-                    class: "inline-flex items-center justify-center rounded-3xl bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-400" %>
-              <%= link_to "Delete",
-                    link_path(link),
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                    class: "inline-flex items-center justify-center rounded-3xl bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-400" %>
-            </div>
-          </div>
-        <% end %>
+  <!-- Table Section -->
+  <div class="bg-white/85 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200/50">
+
+    <% if @links.empty? %>
+      <!-- Empty State -->
+      <div class="flex flex-col items-center justify-center p-16 text-center">
+        <div class="text-7xl mb-4 opacity-50">😔</div>
+        <h3 class="text-2xl font-bold text-gray-700 mb-2">No links yet</h3>
+        <p class="text-gray-500 mb-6">Create your first short link to get started</p>
+        <%= link_to "+ Create Link", new_link_path, class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
       </div>
     <% else %>
-      <div class="rounded-[32px] bg-white p-12 text-center ring-1 ring-slate-200">
-        <p class="text-slate-400">No links created yet.</p>
-        <%= link_to "Create your first link", new_link_path, class: "mt-6 inline-flex rounded-3xl bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-400" %>
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left">
+
+          <!-- Table Head -->
+          <thead class="bg-gradient-to-r from-blue-50 via-purple-50 to-gray-50 border-b border-gray-200 sticky top-0 z-10">
+            <tr>
+              <th class="px-6 py-4 font-semibold text-gray-700">Short URL</th>
+              <th class="px-6 py-4 font-semibold text-gray-700">Original URL</th>
+              <th class="px-6 py-4 text-center font-semibold text-gray-700">Clicks</th>
+              <th class="px-6 py-4 text-center font-semibold text-gray-700">Status</th>
+              <th class="px-6 py-4 text-center font-semibold text-gray-700">Actions</th>
+            </tr>
+          </thead>
+
+          <!-- Table Body -->
+          <tbody class="divide-y divide-gray-100">
+            <% @links.each do |link| %>
+              <tr class="hover:bg-blue-50/40 transition duration-150">
+
+                <!-- Short URL Cell -->
+                <td class="px-6 py-4">
+                  <%= link_to short_url(link.short_code), short_url(link.short_code), target: "_blank", class: "text-blue-600 font-semibold hover:text-blue-800 hover:underline transition" %>
+                </td>
+
+                <!-- Original URL Cell -->
+                <td class="px-6 py-4">
+                  <a href="<%= link.original_url %>" target="_blank" rel="noopener noreferrer" title="<%= link.original_url %>" class="text-gray-700 hover:text-gray-900 hover:underline transition max-w-xs truncate inline-block">
+                    <%= link.original_url %>
+                  </a>
+                </td>
+
+                <!-- Clicks Cell -->
+                <td class="px-6 py-4 text-center">
+                  <span class="inline-block bg-gradient-to-r from-green-100 to-green-50 text-green-700 px-4 py-1.5 rounded-full text-xs font-semibold border border-green-200">
+                    <%= link.clicks %>
+                  </span>
+                </td>
+
+                <!-- Status Cell -->
+                <td class="px-6 py-4 text-center">
+                  <div class="flex flex-col gap-2 items-center justify-center">
+                    <% if link.active? %>
+                      <span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold border border-blue-200">Active</span>
+                    <% else %>
+                      <span class="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold border border-gray-200">Disabled</span>
+                    <% end %>
+
+                    <% if link.expired? %>
+                      <span class="inline-block bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold border border-red-200">Expired</span>
+                    <% end %>
+                  </div>
+                </td>
+
+                <!-- Actions Cell -->
+                <td class="px-6 py-4 text-center">
+                  <div class="relative">
+                    <!-- 3-dot button -->
+                    <button 
+                      onclick="toggleMenu(event, <%= link.id %>)" 
+                      class="p-2 rounded-lg hover:bg-gray-200 text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-150" 
+                      aria-label="Open actions menu"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="5" r="2"/>
+                        <circle cx="12" cy="12" r="2"/>
+                        <circle cx="12" cy="19" r="2"/>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+
+              </tr>
+            <% end %>
+          </tbody>
+
+        </table>
       </div>
     <% end %>
+
   </div>
+
 </div>
+
+<!-- Dropdown Menus Container (Outside Table) -->
+<div id="menu-container" class="fixed inset-0 pointer-events-none z-50">
+  <% if @links.present? %>
+    <% @links.each do |link| %>
+      <div 
+        id="menu-<%= link.id %>" 
+        class="hidden absolute bg-white rounded-xl shadow-2xl border border-gray-200 w-48 overflow-hidden pointer-events-auto"
+        style="min-width: 200px;"
+      >
+        <!-- View -->
+        <%= link_to link_path(link), class: "flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-blue-50 transition duration-150 border-b border-gray-100 w-full" do %>
+          <span>👁</span>
+          <span class="font-medium">View Details</span>
+        <% end %>
+
+        <!-- Toggle Active/Disable -->
+        <%= button_to toggle_active_link_path(link), method: :patch, class: "w-full flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-blue-50 transition duration-150 border-b border-gray-100" do %>
+          <span><%= link.active? ? "🚫" : "✅" %></span>
+          <span class="font-medium"><%= link.active? ? "Disable" : "Enable" %></span>
+        <% end %>
+
+        <!-- Delete -->
+        <%= link_to link_path(link), data: { turbo_method: :delete, turbo_confirm: "Are you sure? This action cannot be undone." }, class: "flex items-center gap-3 px-5 py-3 text-sm text-red-600 hover:bg-red-50 transition duration-150 w-full" do %>
+          <span>🗑</span>
+          <span class="font-medium">Delete</span>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<!-- JavaScript -->
+<script>
+  function toggleMenu(event, id) {
+    event.stopPropagation();
+
+    const menu = document.getElementById("menu-" + id);
+    const button = event.currentTarget;
+    const buttonRect = button.getBoundingClientRect();
+
+    // Close all other menus
+    document.querySelectorAll('#menu-container > div').forEach(m => {
+      if (m.id !== "menu-" + id) {
+        m.classList.add("hidden");
+      }
+    });
+
+    // Toggle current menu
+    if (menu) {
+      menu.classList.toggle("hidden");
+
+      // Position the menu near the button
+      if (!menu.classList.contains("hidden")) {
+        setTimeout(() => {
+          menu.style.top = (buttonRect.bottom + 8) + "px";
+          menu.style.right = (window.innerWidth - buttonRect.right) + "px";
+        }, 0);
+      }
+    }
+  }
+
+  // Close menus when clicking outside
+  document.addEventListener("click", function(e) {
+    const isMenuButton = e.target.closest("button[aria-label='Open actions menu']");
+    const isMenu = e.target.closest("#menu-container > div");
+
+    if (!isMenuButton && !isMenu) {
+      document.querySelectorAll('#menu-container > div').forEach(menu => {
+        menu.classList.add("hidden");
+      });
+    }
+  });
+
+  // Close menus on escape key
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+      document.querySelectorAll('#menu-container > div').forEach(menu => {
+        menu.classList.add("hidden");
+      });
+    }
+  });
+</script>
