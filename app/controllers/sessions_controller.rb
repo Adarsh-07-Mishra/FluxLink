@@ -12,12 +12,16 @@ class SessionsController < ApplicationController
     )
 
     if result.present?
-      cookies.signed[:jwt_token] = {
+      remember_me = params[:remember_me] == "1"
+      cookie_options = {
         value: result[:token],
         httponly: true,
         secure: Rails.env.production?,
         same_site: :strict
       }
+      cookie_options[:expires] = 30.days.from_now if remember_me
+
+      cookies.signed[:jwt_token] = cookie_options
 
       if params[:original_url].present?
         redirect_to new_link_path(original_url: params[:original_url]), notice: "Signed in successfully."

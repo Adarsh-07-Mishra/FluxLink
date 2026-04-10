@@ -1,0 +1,84 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+  <div class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="relative overflow-hidden rounded-[2rem] border border-slate-700/70 bg-slate-900/90 shadow-2xl shadow-black/30">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.16),_transparent_26%)]"></div>
+      <div class="relative grid gap-10 lg:grid-cols-[1.1fr_.9fr] p-8 lg:p-12">
+
+        <div class="space-y-8">
+          <div class="space-y-3">
+            <span class="inline-flex rounded-full bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-blue-300">
+              Legal agreement required
+            </span>
+            <h1 class="text-4xl font-bold tracking-tight text-white">Review terms and privacy to finish signing up</h1>
+            <p class="max-w-2xl text-slate-400 leading-relaxed">
+              Your account will be created automatically after you accept both the Terms of Service and Privacy Policy. This page combines both policies so you can agree once and continue.
+            </p>
+          </div>
+
+          <div class="rounded-[1.75rem] border border-slate-700/60 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/40">
+            <p class="text-slate-300 text-sm">Creating an account for:</p>
+            <p class="mt-2 text-lg font-semibold text-white"><%= @pending_signup&.[]('email') || 'your email' %></p>
+            <% if @pending_signup&.[]('original_url').present? %>
+              <p class="mt-1 text-slate-400 text-sm">You started with a link to shorten: <span class="text-slate-200"><%= @pending_signup['original_url'] %></span></p>
+            <% end %>
+          </div>
+
+          <section class="rounded-[1.5rem] border border-slate-700/60 bg-slate-900/80 p-6">
+            <h2 class="text-2xl font-semibold text-white">Terms of Service</h2>
+            <p class="mt-4 text-slate-300 leading-relaxed">
+              By creating an account, you agree to use FluxLink responsibly and accept the rules that govern our service. You may not abuse the platform, violate laws, distribute malware, or use it for harmful content.
+            </p>
+            <div class="mt-5 space-y-3 text-slate-300 text-sm leading-6">
+              <p><strong>Scope:</strong> FluxLink is provided as-is for shortening URLs and generating WiFi QR codes.</p>
+              <p><strong>Account responsibility:</strong> Keep your credentials secure and do not share your account access.</p>
+              <p><strong>Acceptable use:</strong> No spam, no malicious links, and no content that violates intellectual property or privacy rights.</p>
+            </div>
+          </section>
+
+          <section class="rounded-[1.5rem] border border-slate-700/60 bg-slate-900/80 p-6">
+            <h2 class="text-2xl font-semibold text-white">Privacy Policy</h2>
+            <p class="mt-4 text-slate-300 leading-relaxed">
+              We collect only the information needed to run your account and provide the service. That includes your email, shortened links, and any WiFi network details you choose to store.
+            </p>
+            <div class="mt-5 space-y-3 text-slate-300 text-sm leading-6">
+              <p><strong>Usage:</strong> We use your data to authenticate you, manage your links, and generate QR codes.</p>
+              <p><strong>Security:</strong> Passwords are hashed, and sensitive data is protected with modern session controls.</p>
+              <p><strong>Sharing:</strong> We do not sell personal data. We only share information if required by law or for trusted service providers.</p>
+            </div>
+          </section>
+        </div>
+
+        <aside class="rounded-[2rem] border border-slate-700/60 bg-slate-950/95 p-8 shadow-2xl shadow-black/10">
+          <div class="space-y-5">
+            <div>
+              <p class="text-sm uppercase tracking-[0.24em] text-blue-300">One last step</p>
+              <h2 class="mt-3 text-3xl font-bold text-white">Accept both documents</h2>
+            </div>
+
+            <% if flash[:alert].present? %>
+              <div class="rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
+                <strong>Oops:</strong> <%= flash[:alert] %>
+              </div>
+            <% end %>
+
+            <%= form_with url: accept_agreement_path, local: true, class: "space-y-6" do %>
+              <div class="rounded-3xl border border-slate-700/70 bg-slate-900/80 p-5">
+                <div class="rounded-3xl border border-slate-700/80 bg-slate-950/80 p-4">
+                  <div class="text-base font-semibold text-white">By clicking the button below, you agree to the Terms of Service and Privacy Policy.</div>
+                  <p class="mt-3 text-sm text-slate-400">This agreement completes signup and logs you in automatically.</p>
+                </div>
+              </div>
+
+              <div>
+                <%= submit_tag "Agree and finish signup", class: "inline-flex w-full items-center justify-center rounded-3xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 text-base font-semibold text-white shadow-lg shadow-blue-500/20 transition duration-300 hover:shadow-xl hover:from-blue-700 hover:to-purple-700" %>
+              </div>
+            <% end %>
+
+            <p class="text-sm text-slate-500">By continuing, you confirm that you have read both policies and agree to their terms.</p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+</div>

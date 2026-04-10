@@ -2,7 +2,13 @@ class LinksController < ApplicationController
   before_action :set_link, only: %i[show update_qr destroy]
 
   def index
-    @links = current_user.links.order(created_at: :desc)
+    @view_mode = params[:view] || 'links' # Default to links view
+
+    if @view_mode == 'wifi'
+      @wifi_networks = current_user.wifi_networks.order(created_at: :desc)
+    else
+      @links = current_user.links.order(created_at: :desc)
+    end
   end
 
   def new

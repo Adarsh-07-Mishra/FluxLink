@@ -1,0 +1,136 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+  <!-- Navigation -->
+  <nav class="border-b border-slate-700 bg-slate-900/50 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <%= link_to root_path, class: "text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent" do %>
+            FluxLink
+          <% end %>
+        </div>
+        <div class="flex items-center space-x-6">
+          <%= link_to "Features", features_path, class: "text-slate-300 hover:text-white transition" %>
+          <%= link_to "Pricing", pricing_path, class: "text-slate-300 hover:text-white transition" %>
+          <%= link_to "About", about_path, class: "text-slate-300 hover:text-white transition" %>
+          <%= link_to "Contact", contact_path, class: "text-slate-300 hover:text-white transition" %>
+          <% if logged_in? %>
+            <%= link_to "Dashboard", links_path, class: "text-slate-300 hover:text-white transition" %>
+            <%= link_to "Logout", logout_path, method: :delete, class: "text-slate-300 hover:text-white transition" %>
+          <% else %>
+            <%= link_to "Login", login_path, class: "text-slate-300 hover:text-white transition" %>
+            <%= link_to "Sign Up", signup_path, class: "bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700 p-8">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-white mb-4">Privacy Policy</h1>
+        <p class="text-slate-400">Last updated: <%= Time.current.strftime("%B %d, %Y") %></p>
+      </div>
+
+      <div class="prose prose-invert max-w-none">
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">1. Information We Collect</h2>
+        <p class="text-slate-300 mb-4">
+          We collect information you provide directly to us, such as when you create an account, use our services, or contact us for support.
+        </p>
+
+        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Personal Information</h3>
+        <ul class="text-slate-300 mb-4 list-disc list-inside space-y-2">
+          <li><strong>Email address:</strong> Used for account creation, authentication, and communication</li>
+          <li><strong>Password:</strong> Securely hashed and stored for account security</li>
+          <li><strong>URLs you shorten:</strong> Stored to provide the shortening service</li>
+          <li><strong>WiFi network information:</strong> SSID, password, and security type for QR code generation</li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Usage Information</h3>
+        <ul class="text-slate-300 mb-4 list-disc list-inside space-y-2">
+          <li><strong>IP addresses:</strong> For security and analytics purposes</li>
+          <li><strong>Browser and device information:</strong> To improve service compatibility</li>
+          <li><strong>Usage patterns:</strong> How you interact with our service</li>
+        </ul>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">2. How We Use Your Information</h2>
+        <p class="text-slate-300 mb-4">
+          We use the information we collect to:
+        </p>
+        <ul class="text-slate-300 mb-4 list-disc list-inside space-y-2">
+          <li>Provide, maintain, and improve our services</li>
+          <li>Process transactions and send related information</li>
+          <li>Send technical notices, updates, and support messages</li>
+          <li>Respond to your comments, questions, and requests</li>
+          <li>Monitor and analyze trends and usage</li>
+          <li>Detect, investigate, and prevent fraudulent transactions and other illegal activities</li>
+        </ul>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">3. Information Sharing</h2>
+        <p class="text-slate-300 mb-4">
+          We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy.
+        </p>
+
+        <h3 class="text-lg font-semibold text-white mt-6 mb-3">We may share your information in the following circumstances:</h3>
+        <ul class="text-slate-300 mb-4 list-disc list-inside space-y-2">
+          <li><strong>Service Providers:</strong> With third-party vendors who perform services on our behalf</li>
+          <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+          <li><strong>Business Transfers:</strong> In connection with a merger, sale, or acquisition</li>
+        </ul>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">4. Data Security</h2>
+        <p class="text-slate-300 mb-4">
+          We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
+        </p>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">5. Data Retention</h2>
+        <p class="text-slate-300 mb-4">
+          We retain your personal information for as long as necessary to provide our services and fulfill the purposes outlined in this policy, unless a longer retention period is required by law.
+        </p>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">6. Your Rights</h2>
+        <p class="text-slate-300 mb-4">
+          Depending on your location, you may have certain rights regarding your personal information:
+        </p>
+        <ul class="text-slate-300 mb-4 list-disc list-inside space-y-2">
+          <li><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
+          <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information</li>
+          <li><strong>Deletion:</strong> Request deletion of your personal information</li>
+          <li><strong>Portability:</strong> Request transfer of your data to another service</li>
+          <li><strong>Opt-out:</strong> Object to or restrict certain processing of your information</li>
+        </ul>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">7. Cookies and Tracking</h2>
+        <p class="text-slate-300 mb-4">
+          We use cookies and similar technologies to enhance your experience, analyze usage, and assist in our marketing efforts. You can control cookie settings through your browser preferences.
+        </p>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">8. Third-Party Links</h2>
+        <p class="text-slate-300 mb-4">
+          Our service may contain links to third-party websites. We are not responsible for the privacy practices or content of these external sites.
+        </p>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">9. Children's Privacy</h2>
+        <p class="text-slate-300 mb-4">
+          Our service is not intended for children under 13. We do not knowingly collect personal information from children under 13.
+        </p>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">10. International Data Transfers</h2>
+        <p class="text-slate-300 mb-4">
+          Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place for such transfers.
+        </p>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">11. Changes to This Policy</h2>
+        <p class="text-slate-300 mb-4">
+          We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.
+        </p>
+
+        <h2 class="text-xl font-semibold text-white mt-8 mb-4">12. Contact Us</h2>
+        <p class="text-slate-300 mb-4">
+          If you have any questions about this Privacy Policy, please contact us through our contact page or email us directly.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

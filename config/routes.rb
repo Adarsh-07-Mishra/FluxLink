@@ -6,6 +6,14 @@ Rails.application.routes.draw do
   get "/pricing", to: "home#pricing", as: :pricing
   get "/about", to: "home#about", as: :about
   get "/contact", to: "home#contact", as: :contact
+  get "/documents", to: "home#documents", as: :documents
+  get "/terms", to: "home#terms", as: :terms
+  get "/privacy", to: "home#privacy", as: :privacy
+  get "/agreement", to: "home#agreement", as: :agreement
+  post "/agreement", to: "home#accept_agreement", as: :accept_agreement
+  get "/wifi-qr", to: "home#wifi_qr", as: :wifi_qr
+  get "/wifi-qr/:id", to: "home#wifi_qr", as: :wifi_qr_show
+  post "/wifi-qr", to: "home#generate_wifi_qr", as: :generate_wifi_qr
 
   get "/signup", to: "users#new", as: :signup
   post "/signup", to: "users#create"

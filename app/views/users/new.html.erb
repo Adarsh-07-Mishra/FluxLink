@@ -1,224 +1,149 @@
-<div class="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
-  
-  <!-- Animated background gradients -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-40 -left-40 w-80 h-80 bg-blue-500/30 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-    <div class="absolute top-1/3 -right-20 w-96 h-96 bg-purple-500/25 rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
-    <div class="absolute -bottom-32 left-1/2 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl opacity-20 -translate-x-1/2 animate-pulse" style="animation-delay: 4s;"></div>
-  </div>
+<div class="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.18),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.16),_transparent_25%)]"></div>
+  <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-blue-500/10 to-transparent blur-3xl"></div>
+  <div class="absolute right-[-10%] top-24 h-80 w-80 rounded-full bg-sky-500/20 blur-3xl opacity-70 animate-float"></div>
+  <div class="absolute left-[-8%] top-48 h-72 w-72 rounded-full bg-purple-500/15 blur-3xl opacity-80 animate-float delay-2000"></div>
 
-  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-    
-    <div class="grid gap-8 lg:gap-12 lg:grid-cols-[1.2fr_.8fr]">
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
+    <div class="grid gap-10 lg:grid-cols-[1.15fr_.85fr] items-center">
 
-      <!-- LEFT SIDE - Info -->
-      <div class="space-y-8">
-
-        <!-- Header -->
-        <div class="space-y-6">
-          <div class="inline-flex">
-            <span class="rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-blue-300 border border-blue-400/20 backdrop-blur-sm">
-              🚀 Get Started
-            </span>
-          </div>
-
-          <div class="space-y-4">
-            <h1 class="text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-              Create your 
-              <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">workspace</span>
-            </h1>
-            <p class="text-xl text-slate-300 leading-relaxed max-w-xl">
-              Join thousands of creators shortening links with power, speed, and complete privacy. Manage your URLs, track clicks, and never lose control.
-            </p>
-          </div>
-        </div>
-
-        <!-- Feature Cards -->
-        <div class="grid gap-4">
-          <% [
-            { icon: '⚡', title: 'Lightning Fast', desc: 'Start shortening links in seconds after signup' },
-            { icon: '🔒', title: 'Fully Secure', desc: 'Password hashing, JWT sessions, and encrypted storage' },
-            { icon: '📊', title: 'Complete Control', desc: 'Manage all your links from one beautiful dashboard' },
-            { icon: '🎯', title: 'Analytics Ready', desc: 'Track every click and monitor link performance' }
-          ].each do |feature| %>
-            <div class="group bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-5 hover:border-blue-400/50 transition duration-300">
-              <div class="flex items-start gap-4">
-                <span class="text-2xl flex-shrink-0"><%= feature[:icon] %></span>
-                <div>
-                  <h3 class="font-semibold text-white"><%= feature[:title] %></h3>
-                  <p class="text-sm text-slate-400 mt-1"><%= feature[:desc] %></p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-
-        <!-- Trust Indicators -->
-        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6">
-          <p class="text-sm font-semibold text-slate-300 mb-4">Trusted by 5000+ users</p>
-          <div class="flex items-center gap-2">
-            <div class="flex -space-x-3">
-              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 border-2 border-slate-800"></div>
-              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 border-2 border-slate-800"></div>
-              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-400 border-2 border-slate-800"></div>
-              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-cyan-400 border-2 border-slate-800"></div>
-            </div>
-            <div>
-              <p class="text-sm font-semibold text-white">4.9★</p>
-              <p class="text-xs text-slate-400">from 200+ reviews</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- RIGHT SIDE - Signup Form -->
-      <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-2xl p-8 md:p-10 lg:sticky lg:top-8 h-fit">
-        
-        <!-- Form Header -->
-        <div class="mb-8 space-y-2">
-          <p class="text-xs uppercase tracking-widest text-blue-400 font-semibold">Create Account</p>
-          <h2 class="text-3xl font-bold text-white">Join us today</h2>
-          <p class="text-slate-400 text-sm">Set up your account in 60 seconds</p>
-        </div>
-
-        <!-- Error Messages -->
-        <% if @user.errors.any? %>
-          <div class="mb-6 bg-red-500/10 border border-red-500/30 rounded-2xl p-4 backdrop-blur-sm">
-            <div class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-              </svg>
-              <div>
-                <p class="font-semibold text-red-300 mb-2">Please fix the following errors:</p>
-                <ul class="space-y-1">
-                  <% @user.errors.full_messages.each do |message| %>
-                    <li class="text-sm text-red-200">• <%= message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-          </div>
-        <% end %>
-
-        <!-- Form -->
-        <%= form_with model: @user, url: signup_path, local: true, class: "space-y-5" do |form| %>
-          
-          <% if params[:original_url].present? %>
-            <%= hidden_field_tag :original_url, params[:original_url] %>
-          <% end %>
-
-          <!-- Email Field -->
-          <div class="space-y-2">
-            <%= form.label :email, "Email Address", class: "block text-sm font-semibold text-slate-300" %>
-            <div class="relative">
-              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </span>
-              <%= form.email_field :email, 
-                  required: true,
-                  class: "w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-5 py-3 pl-12 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition duration-200",
-                  placeholder: "you@example.com" %>
-            </div>
-            <p class="text-xs text-slate-500 mt-1">We'll never share your email</p>
-          </div>
-
-          <!-- Password Field -->
-          <div class="space-y-2">
-            <%= form.label :password, "Password", class: "block text-sm font-semibold text-slate-300" %>
-            <div class="relative">
-              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </span>
-              <%= form.password_field :password, 
-                  required: true,
-                  class: "w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-5 py-3 pl-12 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition duration-200",
-                  placeholder: "••••••••" %>
-            </div>
-            <p class="text-xs text-slate-500 mt-1">At least 8 characters recommended</p>
-          </div>
-
-          <!-- Confirm Password Field -->
-          <div class="space-y-2">
-            <%= form.label :password_confirmation, "Confirm Password", class: "block text-sm font-semibold text-slate-300" %>
-            <div class="relative">
-              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </span>
-              <%= form.password_field :password_confirmation, 
-                  required: true,
-                  class: "w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-5 py-3 pl-12 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition duration-200",
-                  placeholder: "••••••••" %>
-            </div>
-          </div>
-
-          <!-- Terms Checkbox -->
-          <div class="flex items-start gap-3 pt-2">
-            <%= form.check_box :agree_terms, { class: "w-5 h-5 rounded-lg border-2 border-slate-600 bg-slate-900/50 text-blue-500 focus:ring-2 focus:ring-blue-500/30 cursor-pointer" } %>
-            <label class="text-sm text-slate-400 cursor-pointer">
-              I agree to the 
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">Terms of Service</a> 
-              and 
-              <a href="#" class="text-blue-400 hover:text-blue-300 transition">Privacy Policy</a>
-            </label>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="pt-2">
-            <%= form.submit "Create Account", 
-                class: "w-full rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition duration-300 active:scale-95" %>
-          </div>
-
-        <% end %>
-
-        <!-- Divider -->
-        <div class="relative">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-slate-600"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-3 bg-gradient-to-b from-slate-800/50 to-slate-900/50 text-slate-400">or</span>
-          </div>
-        </div>
-
-        <!-- OAuth Option (if implemented) -->
-        <button type="button" class="w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-6 py-3 text-base font-semibold text-white hover:border-blue-500 hover:bg-slate-900 transition duration-200 flex items-center justify-center gap-2">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.85 4.05-1.27 1.45-3.257 2.986-6.59 2.986-5.231 0-9.502-4.144-9.502-9.502s4.271-9.502 9.502-9.502c2.92 0 5.603 1.064 7.178 2.989l2.335-2.336C19.268 1.889 16.823 0 12.48 0 5.597 0 .073 5.52.073 12.497s5.524 12.497 12.407 12.497c3.368 0 6.189-1.107 8.302-3.107 2.051-1.898 3.395-4.649 3.576-7.98.04-.526.056-1.189.056-1.963v-.92H12.48z"/>
-          </svg>
-          Continue with Google
-        </button>
-
-        <!-- Sign In Link -->
-        <div class="text-center pt-4 border-t border-slate-600">
-          <p class="text-slate-400 text-sm">
-            Already have an account? 
-            <%= link_to "Sign in", login_path(original_url: params[:original_url]), class: "text-blue-400 hover:text-blue-300 font-semibold transition", data: { transition: true } %>
+      <section class="space-y-8">
+        <div class="space-y-4 max-w-2xl">
+          <span class="inline-flex items-center rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-blue-300 backdrop-blur-sm">
+            FluxLink Studio
+          </span>
+          <h1 class="text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-tight">
+            Build your <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">next link suite</span> in minutes.
+          </h1>
+          <p class="text-lg text-slate-400 leading-relaxed">
+            Create an account to shorten links, manage advanced redirect rules, and generate WiFi QR codes with a beautifully designed dashboard.
           </p>
         </div>
 
-      </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="group overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5 shadow-xl shadow-slate-950/20 transition duration-300 hover:-translate-y-1 hover:border-blue-400/40">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-300">⚡</div>
+            <h3 class="mt-4 text-lg font-semibold text-white">Instant setup</h3>
+            <p class="mt-2 text-sm text-slate-400">Sign up once and get started with link shortening immediately.</p>
+          </div>
+          <div class="group overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5 shadow-xl shadow-slate-950/20 transition duration-300 hover:-translate-y-1 hover:border-purple-400/40">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-300">🔒</div>
+            <h3 class="mt-4 text-lg font-semibold text-white">Secure by design</h3>
+            <p class="mt-2 text-sm text-slate-400">Passwords are hashed and sessions are protected with JWT cookies.</p>
+          </div>
+        </div>
 
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="group overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5 shadow-xl shadow-slate-950/20 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/40">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-300">📊</div>
+            <h3 class="mt-4 text-lg font-semibold text-white">Analytics ready</h3>
+            <p class="mt-2 text-sm text-slate-400">Track clicks and activity from all your shared links.</p>
+          </div>
+          <div class="group overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5 shadow-xl shadow-slate-950/20 transition duration-300 hover:-translate-y-1 hover:border-blue-300/40">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-300">📡</div>
+            <h3 class="mt-4 text-lg font-semibold text-white">WiFi QR codes</h3>
+            <p class="mt-2 text-sm text-slate-400">Generate secure WiFi QR tags instantly after signup.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative overflow-hidden rounded-[2rem] border border-slate-700/60 bg-slate-900/90 p-8 shadow-2xl shadow-slate-950/50 backdrop-blur-xl">
+        <div class="absolute right-0 top-0 h-40 w-40 -translate-x-1/2 translate-y-[-20%] rounded-full bg-blue-500/10 blur-3xl"></div>
+        <div class="absolute left-0 bottom-0 h-36 w-36 translate-x-[-20%] rounded-full bg-purple-500/10 blur-3xl"></div>
+
+        <div class="relative z-10 space-y-8">
+          <div class="space-y-2">
+            <p class="text-xs uppercase tracking-[0.3em] text-cyan-300 font-semibold">Sign up</p>
+            <h2 class="text-3xl font-bold text-white">Create your account</h2>
+            <p class="text-slate-400">Fast, modern, and secure onboarding with smart validation and helpful tips.</p>
+          </div>
+
+          <% if flash.now[:alert].present? || flash[:alert].present? %>
+            <div class="rounded-3xl border border-red-500/40 bg-red-600/10 p-4 text-sm text-red-100">
+              <p><strong>Oops:</strong> <%= flash.now[:alert].presence || flash[:alert] %></p>
+            </div>
+          <% end %>
+
+          <% if @user.errors.any? %>
+            <div class="rounded-3xl border border-red-500/40 bg-red-600/10 p-4 text-sm text-red-100">
+              <p class="font-semibold mb-2">Please fix the following:</p>
+              <ul class="space-y-2 list-disc pl-5">
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <%= form_with(model: @user, url: signup_path, local: true) do |form| %>
+            <% if params[:original_url].present? %>
+              <%= hidden_field_tag :original_url, params[:original_url] %>
+            <% end %>
+
+            <div class="space-y-4">
+              <div>
+                <%= form.label :email, "Email", class: "text-sm font-semibold text-slate-300" %>
+                <%= form.email_field :email, required: true, class: "mt-3 w-full rounded-3xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition", placeholder: "you@example.com" %>
+              </div>
+
+              <div>
+                <%= form.label :password, "Password", class: "text-sm font-semibold text-slate-300" %>
+                <%= form.password_field :password, required: true, class: "mt-3 w-full rounded-3xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-white placeholder:text-slate-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20 transition", placeholder: "••••••••" %>
+              </div>
+
+              <div>
+                <%= form.label :password_confirmation, "Confirm Password", class: "text-sm font-semibold text-slate-300" %>
+                <%= form.password_field :password_confirmation, required: true, class: "mt-3 w-full rounded-3xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-white placeholder:text-slate-500 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 transition", placeholder: "••••••••" %>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-700/70 bg-slate-950/80 p-5">
+              <div class="space-y-3">
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-300">💡</span>
+                  <div>
+                    <p class="font-semibold text-white">Agreement required</p>
+                    <p class="text-sm text-slate-400">Please accept the Terms of Service and Privacy Policy to finish signup, or go to the agreement page to review them first.</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex items-start gap-3 rounded-3xl border border-slate-700/80 bg-slate-900/80 p-4 text-sm text-slate-300">
+                  <div class="mt-1">
+                    <%= form.check_box :agree_terms, class: "h-4 w-4 rounded border-slate-600 bg-slate-950 text-cyan-500 focus:ring-cyan-400" %>
+                  </div>
+                  <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-white" for="user_agree_terms">I agree to the <%= link_to "Terms of Service", terms_path, class: "text-cyan-300 hover:text-cyan-200" %> and <%= link_to "Privacy Policy", privacy_path, class: "text-cyan-300 hover:text-cyan-200" %>.</label>
+                    <p class="text-slate-400">Leave this unchecked to review the agreement on the next page instead.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid gap-4">
+              <%= form.submit "Create Account", class: "w-full rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-4 text-base font-semibold text-white shadow-xl shadow-cyan-500/20 hover:shadow-2xl transition duration-300" %>
+              <a href="<%= agreement_path %>" class="inline-flex w-full items-center justify-center rounded-3xl border border-slate-700 bg-slate-950/80 px-5 py-4 text-sm font-semibold text-slate-100 hover:border-cyan-400 hover:text-white transition">
+                <svg class="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.85 4.05-1.27 1.45-3.257 2.986-6.59 2.986-5.231 0-9.502-4.144-9.502-9.502s4.271 9.502 9.502 9.502c2.92 0 5.603 1.064 7.178 2.989l2.335-2.336C19.268 1.889 16.823 0 12.48 0 5.597 0 .073 5.52.073 12.497s5.524 12.497 12.407 12.497c3.368 0 6.189-1.107 8.302-3.107 2.051-1.898 3.395-4.649 3.576-7.98.04-.526.056-1.189.056-1.963v-.92H12.48z"/></svg>
+                Review agreement page
+              </a>
+            </div>
+          <% end %>
+
+          <div class="pt-4 text-center text-sm text-slate-400">
+            Already have an account? <%= link_to "Sign in", login_path(original_url: params[:original_url]), class: "text-cyan-300 hover:text-cyan-200 font-semibold" %>
+          </div>
+        </div>
+      </section>
     </div>
-
   </div>
-
 </div>
 
-<!-- CSS Animations -->
 <style>
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
   }
-  
-  .animate-pulse {
-    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
   }
+  .delay-2000 { animation-delay: 2s; }
 </style>

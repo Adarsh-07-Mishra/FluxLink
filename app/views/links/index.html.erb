@@ -4,152 +4,250 @@
   <div class="flex justify-between items-center mb-8">
     <div>
       <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">📊 Dashboard</h1>
-      <p class="text-gray-500 mt-2 text-base">Manage your short links elegantly</p>
+      <p class="text-gray-500 mt-2 text-base"><%= @view_mode == 'wifi' ? 'Manage your saved WiFi QR codes' : 'Manage your short links elegantly' %></p>
     </div>
 
-    <%= link_to "+ New Link", new_link_path, class: "inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition duration-200" %>
+    <%= link_to (@view_mode == 'wifi' ? "+ New WiFi QR" : "+ New Link"), (@view_mode == 'wifi' ? wifi_qr_path : new_link_path), class: "inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition duration-200" %>
+  </div>
+
+  <!-- View Toggle -->
+  <div class="flex justify-center mb-8">
+    <div class="bg-white/80 backdrop-blur-lg p-2 rounded-2xl shadow-lg border border-gray-200/50">
+      <div class="flex rounded-xl">
+        <%= link_to links_path(view: 'links'), class: "px-6 py-3 rounded-xl font-medium transition duration-200 #{(@view_mode == 'links' || @view_mode.nil?) ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:text-gray-900'}" do %>
+          🔗 Links
+        <% end %>
+        <%= link_to links_path(view: 'wifi'), class: "px-6 py-3 rounded-xl font-medium transition duration-200 #{@view_mode == 'wifi' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:text-gray-900'}" do %>
+          📶 WiFi QR
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <!-- Stats Section -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-
-    <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-blue-100/50 hover:shadow-xl transition duration-200">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-gray-500 text-sm font-medium mb-2">Total Links</p>
-          <p class="text-4xl font-bold text-blue-600"><%= @links.count %></p>
+  <% if @view_mode == 'wifi' %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-blue-100/50 hover:shadow-xl transition duration-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm font-medium mb-2">WiFi Networks</p>
+            <p class="text-4xl font-bold text-blue-600"><%= @wifi_networks.count %></p>
+          </div>
+          <div class="text-5xl opacity-20">📶</div>
         </div>
-        <div class="text-5xl opacity-20">🔗</div>
+      </div>
+
+      <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-green-100/50 hover:shadow-xl transition duration-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm font-medium mb-2">Last Generated</p>
+            <p class="text-lg font-bold text-green-600">
+              <%= @wifi_networks.first ? @wifi_networks.first.created_at.strftime("%b %d, %Y") : "None" %>
+            </p>
+          </div>
+          <div class="text-5xl opacity-20">🕒</div>
+        </div>
       </div>
     </div>
-
-    <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-green-100/50 hover:shadow-xl transition duration-200">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-gray-500 text-sm font-medium mb-2">Total Clicks</p>
-          <p class="text-4xl font-bold text-green-600"><%= @links.sum(:clicks) %></p>
+  <% else %>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-blue-100/50 hover:shadow-xl transition duration-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm font-medium mb-2">Total Links</p>
+            <p class="text-4xl font-bold text-blue-600"><%= @links.count %></p>
+          </div>
+          <div class="text-5xl opacity-20">🔗</div>
         </div>
-        <div class="text-5xl opacity-20">📈</div>
+      </div>
+
+      <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-green-100/50 hover:shadow-xl transition duration-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm font-medium mb-2">Total Clicks</p>
+            <p class="text-4xl font-bold text-green-600"><%= @links.sum(:clicks) %></p>
+          </div>
+          <div class="text-5xl opacity-20">📈</div>
+        </div>
+      </div>
+
+      <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-purple-100/50 hover:shadow-xl transition duration-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm font-medium mb-2">Active Links</p>
+            <p class="text-4xl font-bold text-purple-600"><%= @links.select(&:active?).count %></p>
+          </div>
+          <div class="text-5xl opacity-20">✅</div>
+        </div>
       </div>
     </div>
+  <% end %>
 
-    <div class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-purple-100/50 hover:shadow-xl transition duration-200">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-gray-500 text-sm font-medium mb-2">Active Links</p>
-          <p class="text-4xl font-bold text-purple-600"><%= @links.select(&:active?).count %></p>
+  <!-- Content Section -->
+  <% if @view_mode == 'wifi' %>
+    <!-- WiFi Networks Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% if @wifi_networks.empty? %>
+        <!-- Empty State for WiFi -->
+        <div class="col-span-full bg-white/85 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200/50 p-16 text-center">
+          <div class="text-7xl mb-4 opacity-50">📶</div>
+          <h3 class="text-2xl font-bold text-gray-700 mb-2">No WiFi QR codes yet</h3>
+          <p class="text-gray-500 mb-6">Create your first WiFi QR code to get started</p>
+          <%= link_to "📶 Create WiFi QR", wifi_qr_path, class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
         </div>
-        <div class="text-5xl opacity-20">✅</div>
-      </div>
+      <% else %>
+        <% @wifi_networks.each do |network| %>
+          <div class="bg-white/85 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200/50 p-6 hover:shadow-2xl transition duration-200">
+
+            <!-- Network Header -->
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <span class="text-blue-600">📶</span>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900 text-lg"><%= network.ssid %></h3>
+                  <p class="text-sm text-gray-500"><%= network.security %></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Network Details -->
+            <div class="space-y-2 mb-4">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Security:</span>
+                <span class="text-gray-900 font-medium"><%= network.security %></span>
+              </div>
+              <% if network.password.present? %>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">Password:</span>
+                  <span class="text-gray-900 font-medium"><%= "•" * network.password.length %></span>
+                </div>
+              <% end %>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Created:</span>
+                <span class="text-gray-900 font-medium"><%= network.created_at.strftime("%b %d, %Y") %></span>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-2">
+              <%= link_to wifi_qr_show_path(network), class: "flex-1 bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition duration-300 text-center" do %>
+                👁️ View QR
+              <% end %>
+            </div>
+
+          </div>
+        <% end %>
+      <% end %>
     </div>
+  <% else %>
+    <!-- Links Table -->
+    <div class="bg-white/85 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200/50">
 
-  </div>
+      <% if @links.empty? %>
+        <!-- Empty State -->
+        <div class="flex flex-col items-center justify-center p-16 text-center">
+          <div class="text-7xl mb-4 opacity-50">😔</div>
+          <h3 class="text-2xl font-bold text-gray-700 mb-2">No links yet</h3>
+          <p class="text-gray-500 mb-6">Create your first short link to get started</p>
+          <%= link_to "+ Create Link", new_link_path, class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+        </div>
+      <% else %>
+        <!-- Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left">
 
-  <!-- Table Section -->
-  <div class="bg-white/85 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200/50">
-
-    <% if @links.empty? %>
-      <!-- Empty State -->
-      <div class="flex flex-col items-center justify-center p-16 text-center">
-        <div class="text-7xl mb-4 opacity-50">😔</div>
-        <h3 class="text-2xl font-bold text-gray-700 mb-2">No links yet</h3>
-        <p class="text-gray-500 mb-6">Create your first short link to get started</p>
-        <%= link_to "+ Create Link", new_link_path, class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
-      </div>
-    <% else %>
-      <!-- Table -->
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm text-left">
-
-          <!-- Table Head -->
-          <thead class="bg-gradient-to-r from-blue-50 via-purple-50 to-gray-50 border-b border-gray-200 sticky top-0 z-10">
-            <tr>
-              <th class="px-6 py-4 font-semibold text-gray-700">Short URL</th>
-              <th class="px-6 py-4 font-semibold text-gray-700">Original URL</th>
-              <th class="px-6 py-4 text-center font-semibold text-gray-700">Clicks</th>
-              <th class="px-6 py-4 text-center font-semibold text-gray-700">Status</th>
-              <th class="px-6 py-4 text-center font-semibold text-gray-700">Actions</th>
-            </tr>
-          </thead>
-
-          <!-- Table Body -->
-          <tbody class="divide-y divide-gray-100">
-            <% @links.each do |link| %>
-              <tr class="hover:bg-blue-50/40 transition duration-150">
-
-                <!-- Short URL Cell -->
-                <td class="px-6 py-4">
-                  <%= link_to short_url(link.short_code), short_url(link.short_code), target: "_blank", class: "text-blue-600 font-semibold hover:text-blue-800 hover:underline transition" %>
-                </td>
-
-                <!-- Original URL Cell -->
-                <td class="px-6 py-4">
-                  <a href="<%= link.original_url %>" target="_blank" rel="noopener noreferrer" title="<%= link.original_url %>" class="text-gray-700 hover:text-gray-900 hover:underline transition max-w-xs truncate inline-block">
-                    <%= link.original_url %>
-                  </a>
-                </td>
-
-                <!-- Clicks Cell -->
-                <td class="px-6 py-4 text-center">
-                  <span class="inline-block bg-gradient-to-r from-green-100 to-green-50 text-green-700 px-4 py-1.5 rounded-full text-xs font-semibold border border-green-200">
-                    <%= link.clicks %>
-                  </span>
-                </td>
-
-                <!-- Status Cell -->
-                <td class="px-6 py-4 text-center">
-                  <div class="flex flex-col gap-2 items-center justify-center">
-                    <% if link.active? %>
-                      <span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold border border-blue-200">Active</span>
-                    <% else %>
-                      <span class="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold border border-gray-200">Disabled</span>
-                    <% end %>
-
-                    <% if link.expired? %>
-                      <span class="inline-block bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold border border-red-200">Expired</span>
-                    <% end %>
-                  </div>
-                </td>
-
-                <!-- Actions Cell -->
-                <td class="px-6 py-4 text-center">
-                  <div class="relative">
-                    <!-- 3-dot button -->
-                    <button 
-                      onclick="toggleMenu(event, <%= link.id %>)" 
-                      class="p-2 rounded-lg hover:bg-gray-200 text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-150" 
-                      aria-label="Open actions menu"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="5" r="2"/>
-                        <circle cx="12" cy="12" r="2"/>
-                        <circle cx="12" cy="19" r="2"/>
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-
+            <!-- Table Head -->
+            <thead class="bg-gradient-to-r from-blue-50 via-purple-50 to-gray-50 border-b border-gray-200 sticky top-0 z-10">
+              <tr>
+                <th class="px-6 py-4 font-semibold text-gray-700">Short URL</th>
+                <th class="px-6 py-4 font-semibold text-gray-700">Original URL</th>
+                <th class="px-6 py-4 text-center font-semibold text-gray-700">Clicks</th>
+                <th class="px-6 py-4 text-center font-semibold text-gray-700">Status</th>
+                <th class="px-6 py-4 text-center font-semibold text-gray-700">Actions</th>
               </tr>
-            <% end %>
-          </tbody>
+            </thead>
 
-        </table>
-      </div>
-    <% end %>
+            <!-- Table Body -->
+            <tbody class="divide-y divide-gray-100">
+              <% @links.each do |link| %>
+                <tr class="hover:bg-blue-50/40 transition duration-150">
 
-  </div>
+                  <!-- Short URL Cell -->
+                  <td class="px-6 py-4">
+                    <%= link_to short_url(link.short_code), short_url(link.short_code), target: "_blank", class: "text-blue-600 font-semibold hover:text-blue-800 hover:underline transition" %>
+                  </td>
+
+                  <!-- Original URL Cell -->
+                  <td class="px-6 py-4">
+                    <a href="<%= link.original_url %>" target="_blank" rel="noopener noreferrer" title="<%= link.original_url %>" class="text-gray-700 hover:text-gray-900 hover:underline transition max-w-xs truncate inline-block">
+                      <%= link.original_url %>
+                    </a>
+                  </td>
+
+                  <!-- Clicks Cell -->
+                  <td class="px-6 py-4 text-center">
+                    <span class="inline-block bg-gradient-to-r from-green-100 to-green-50 text-green-700 px-4 py-1.5 rounded-full text-xs font-semibold border border-green-200">
+                      <%= link.clicks %>
+                    </span>
+                  </td>
+
+                  <!-- Status Cell -->
+                  <td class="px-6 py-4 text-center">
+                    <div class="flex flex-col gap-2 items-center justify-center">
+                      <% if link.active? %>
+                        <span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold border border-blue-200">Active</span>
+                      <% else %>
+                        <span class="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold border border-gray-200">Disabled</span>
+                      <% end %>
+
+                      <% if link.expired? %>
+                        <span class="inline-block bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold border border-red-200">Expired</span>
+                      <% end %>
+                    </div>
+                  </td>
+
+                  <!-- Actions Cell -->
+                  <td class="px-6 py-4 text-center">
+                    <div class="relative">
+                      <!-- 3-dot button -->
+                      <button
+                        onclick="toggleMenu(event, <%= link.id %>)"
+                        class="p-2 rounded-lg hover:bg-gray-200 text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-150"
+                        aria-label="Open actions menu"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                          <circle cx="12" cy="5" r="2"/>
+                          <circle cx="12" cy="12" r="2"/>
+                          <circle cx="12" cy="19" r="2"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+
+                </tr>
+              <% end %>
+            </tbody>
+
+          </table>
+        </div>
+      <% end %>
+
+    </div>
+  <% end %>
 
 </div>
 
 <!-- Dropdown Menus Container (Outside Table) -->
+<% if @view_mode != 'wifi' && @links.present? %>
 <div id="menu-container" class="fixed inset-0 pointer-events-none z-50">
-  <% if @links.present? %>
-    <% @links.each do |link| %>
-      <div 
-        id="menu-<%= link.id %>" 
-        class="hidden absolute bg-white rounded-xl shadow-2xl border border-gray-200 w-48 overflow-hidden pointer-events-auto"
-        style="min-width: 200px;"
-      >
+  <% @links.each do |link| %>
+    <div
+      id="menu-<%= link.id %>"
+      class="hidden absolute bg-white rounded-xl shadow-2xl border border-gray-200 w-48 overflow-hidden pointer-events-auto"
+      style="min-width: 200px;"
+    >
         <!-- View -->
         <%= link_to link_path(link), class: "flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-blue-50 transition duration-150 border-b border-gray-100 w-full" do %>
           <span>👁</span>
@@ -167,10 +265,10 @@
           <span>🗑</span>
           <span class="font-medium">Delete</span>
         <% end %>
-      </div>
-    <% end %>
+    </div>
   <% end %>
 </div>
+<% end %>
 
 <!-- JavaScript -->
 <script>

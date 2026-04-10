@@ -1,174 +1,160 @@
-<div class="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
-  
-  <!-- Animated background gradients -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-40 left-1/4 w-80 h-80 bg-indigo-500/30 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-    <div class="absolute top-1/3 -right-20 w-96 h-96 bg-sky-500/25 rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
-    <div class="absolute -bottom-32 left-1/2 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl opacity-20 -translate-x-1/2 animate-pulse" style="animation-delay: 4s;"></div>
-  </div>
+<div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.16),_transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(129,140,248,0.12),_transparent_25%)]"></div>
+  <div class="absolute left-[-8%] top-20 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl opacity-80 animate-pulse-slow"></div>
+  <div class="absolute right-[-10%] top-28 h-80 w-80 rounded-full bg-sky-500/20 blur-3xl opacity-75 animate-float"></div>
 
-  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-    
-    <div class="grid gap-8 lg:gap-12 lg:grid-cols-[1.2fr_.8fr]">
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
+    <div class="grid gap-10 lg:grid-cols-[1.2fr_.8fr] items-center">
 
-      <!-- LEFT SIDE - Info -->
-      <div class="space-y-8">
+      <section class="space-y-8">
+        <div class="space-y-4 max-w-2xl">
+          <span class="inline-flex items-center rounded-full border border-indigo-400/20 bg-indigo-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-indigo-300 backdrop-blur-sm">
+            Welcome Back
+          </span>
+          <h1 class="text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-tight">
+            Access your <span class="bg-gradient-to-r from-indigo-400 via-sky-400 to-cyan-400 bg-clip-text text-transparent">FluxLink dashboard</span>
+          </h1>
+          <p class="text-lg text-slate-400 leading-relaxed">
+            Sign in to manage your short links, view analytics, and unlock WiFi QR code tools in a sleek, secure workspace.
+          </p>
+        </div>
 
-        <!-- Header -->
-        <div class="space-y-6">
-          <div class="inline-flex">
-            <span class="rounded-full bg-gradient-to-r from-indigo-500/20 to-sky-500/20 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-indigo-300 border border-indigo-400/20 backdrop-blur-sm">
-              Welcome Back
-            </span>
+        <div class="grid gap-4">
+          <div class="group rounded-3xl border border-slate-700/60 bg-slate-900/70 p-6 shadow-xl shadow-slate-950/20 transition duration-300 hover:-translate-y-1 hover:border-indigo-400/40">
+            <div class="flex items-center gap-4">
+              <div class="h-12 w-12 rounded-3xl bg-indigo-500/10 text-indigo-300 flex items-center justify-center">🔐</div>
+              <div>
+                <h3 class="text-lg font-semibold text-white">Secure Access</h3>
+                <p class="text-sm text-slate-400">JWT sessions, encrypted cookies, and secure login flows keep your account safe.</p>
+              </div>
+            </div>
           </div>
-
-          <div class="space-y-4">
-            <h1 class="text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-              Access your 
-              <span class="bg-gradient-to-r from-indigo-400 via-sky-400 to-cyan-400 bg-clip-text text-transparent">dashboard</span>
-            </h1>
-            <p class="text-xl text-slate-300 leading-relaxed max-w-xl">
-              Sign in to manage your short links, track analytics, and access all your saved URLs in one secure place.
-            </p>
+          <div class="group rounded-3xl border border-slate-700/60 bg-slate-900/70 p-6 shadow-xl shadow-slate-950/20 transition duration-300 hover:-translate-y-1 hover:border-sky-400/40">
+            <div class="flex items-center gap-4">
+              <div class="h-12 w-12 rounded-3xl bg-sky-500/10 text-sky-300 flex items-center justify-center">📊</div>
+              <div>
+                <h3 class="text-lg font-semibold text-white">Your Analytics</h3>
+                <p class="text-sm text-slate-400">Track every click, see engagement trends, and optimize your shared links.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Feature Cards -->
-        <div class="grid gap-4">
-          <% [
-            { icon: '🔐', title: 'Secure Access', desc: 'JWT-protected sessions with industry-standard encryption' },
-            { icon: '📊', title: 'Your Analytics', desc: 'View real-time click data and performance metrics' },
-            { icon: '🔗', title: 'Manage Links', desc: 'Edit, pause, or delete your short links anytime' },
-            { icon: '⚡', title: 'Fast & Smooth', desc: 'Lightning-quick load times with zero friction' }
-          ].each do |feature| %>
-            <div class="group bg-gradient-to-r from-indigo-500/10 to-sky-500/10 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-5 hover:border-indigo-400/50 transition duration-300">
-              <div class="flex items-start gap-4">
-                <span class="text-2xl flex-shrink-0"><%= feature[:icon] %></span>
-                <div>
-                  <h3 class="font-semibold text-white"><%= feature[:title] %></h3>
-                  <p class="text-sm text-slate-400 mt-1"><%= feature[:desc] %></p>
+        <div class="rounded-3xl border border-slate-700/60 bg-slate-900/80 p-6 shadow-2xl shadow-slate-950/20">
+          <p class="text-sm uppercase tracking-[0.22em] text-slate-500">Pro tip</p>
+          <p class="mt-3 text-slate-300">Use the same email and strong password to keep your links secure across every device.</p>
+        </div>
+      </section>
+
+      <section class="relative overflow-hidden rounded-[2.5rem] border border-slate-700/30 bg-slate-950/85 p-8 shadow-2xl shadow-slate-950/40 backdrop-blur-2xl transition duration-700 ease-out hover:-translate-y-1">
+        <div class="absolute inset-0 overflow-hidden">
+          <div class="absolute -left-20 -top-24 h-72 w-72 rounded-full bg-cyan-500/15 blur-3xl opacity-90 animate-float-slow"></div>
+          <div class="absolute -right-16 top-16 h-72 w-72 rounded-full bg-pink-500/20 blur-3xl opacity-80 animate-pulse-slow"></div>
+          <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/85 to-transparent"></div>
+          <div class="absolute inset-y-0 right-[20%] w-1.5 rounded-full bg-gradient-to-b from-cyan-400/40 to-transparent blur-xl"></div>
+        </div>
+
+        <div class="relative z-10 grid gap-8 animate-slide-in-up">
+          <div class="space-y-3">
+            <span class="inline-flex items-center rounded-full border border-cyan-300/20 bg-cyan-500/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-cyan-200">Stylish + Secure</span>
+            <h2 class="text-4xl font-bold tracking-tight text-white">Sign in with FluxLink energy</h2>
+            <p class="max-w-xl text-slate-400">A distinctive login experience with softer glass panels, glowing accents, and motion that feels premium without extra distraction.</p>
+          </div>
+
+          <% if flash[:alert].present? %>
+            <div class="rounded-3xl border border-red-500/40 bg-red-600/10 p-4 text-sm text-red-100 shadow-sm shadow-red-500/10">
+              <p><strong>Oops:</strong> <%= flash[:alert] %></p>
+            </div>
+          <% end %>
+
+          <%= form_with(url: login_path, local: true) do |form| %>
+            <% if params[:original_url].present? %>
+              <%= hidden_field_tag :original_url, params[:original_url] %>
+            <% end %>
+
+            <div class="space-y-5">
+              <div class="rounded-[2rem] border border-slate-700/70 bg-slate-950/90 p-5 shadow-[0_18px_60px_-45px_rgba(15,23,42,0.9)] transition duration-300 hover:border-cyan-400/40">
+                <label class="block text-sm font-semibold text-slate-300" for="user_email">Email</label>
+                <div class="mt-3 flex items-center gap-3 rounded-3xl border border-slate-800 bg-slate-900/95 px-4 py-3 ring-1 ring-slate-800/50 transition focus-within:border-cyan-400 focus-within:ring-cyan-400/20">
+                  <span class="text-cyan-400">@</span>
+                  <%= form.email_field :email, required: true, class: "w-full bg-transparent text-white placeholder:text-slate-500 focus:outline-none", placeholder: "you@example.com" %>
+                </div>
+              </div>
+
+              <div class="rounded-[2rem] border border-slate-700/70 bg-slate-950/90 p-5 shadow-[0_18px_60px_-45px_rgba(15,23,42,0.9)] transition duration-300 hover:border-indigo-400/40">
+                <label class="block text-sm font-semibold text-slate-300" for="user_password">Password</label>
+                <div class="mt-3 flex items-center gap-3 rounded-3xl border border-slate-800 bg-slate-900/95 px-4 py-3 ring-1 ring-slate-800/50 transition focus-within:border-indigo-400 focus-within:ring-indigo-400/20">
+                  <span class="text-indigo-400">●●●</span>
+                  <%= form.password_field :password, required: true, class: "w-full bg-transparent text-white placeholder:text-slate-500 focus:outline-none", placeholder: "Enter your password" %>
                 </div>
               </div>
             </div>
-          <% end %>
-        </div>
 
-        <!-- Security Badge -->
-        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6">
-          <div class="flex items-start gap-4">
-            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-500/20 border border-green-500/30 flex-shrink-0">
-              <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm font-semibold text-white mb-1">🔐 Your data is protected</p>
-              <p class="text-xs text-slate-400">SSL encrypted • Password hashed • No third-party access</p>
-            </div>
-          </div>
-        </div>
+            <div class="space-y-4">
+              <div class="rounded-[1.75rem] border border-slate-700/70 bg-slate-950/90 p-4 shadow-[0_18px_60px_-45px_rgba(15,23,42,0.9)] transition duration-300 hover:border-cyan-400/40">
+                <label class="group flex items-center justify-between gap-4 rounded-[1.5rem] bg-slate-900/95 p-4 text-sm text-slate-200 transition duration-300 hover:bg-slate-900">
+                  <span class="space-y-1">
+                    <span class="block font-semibold text-slate-100">Keep me signed in</span>
+                    <span class="block text-xs text-slate-400">Stay logged in on this device for faster access.</span>
+                  </span>
+                  <span class="relative inline-flex h-10 w-16 items-center rounded-full bg-slate-800 p-1 transition duration-300 peer-focus-within:ring-2 peer-focus-within:ring-cyan-400/50">
+                    <%= form.check_box :remember_me, class: "peer sr-only" %>
+                    <span class="absolute left-1 top-1 h-8 w-8 rounded-full bg-slate-950 shadow-lg transition duration-300 peer-checked:translate-x-6 peer-checked:bg-cyan-400"></span>
+                  </span>
+                </label>
+              </div>
 
-      </div>
-
-      <!-- RIGHT SIDE - Login Form -->
-      <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-2xl p-8 md:p-10 lg:sticky lg:top-8 h-fit">
-        
-        <!-- Form Header -->
-        <div class="mb-8 space-y-2">
-          <p class="text-xs uppercase tracking-widest text-indigo-400 font-semibold">Sign In</p>
-          <h2 class="text-3xl font-bold text-white">Welcome back</h2>
-          <p class="text-slate-400 text-sm">Access your account and continue managing links</p>
-        </div>
-
-        <!-- Error Messages -->
-        <% if flash[:alert].present? %>
-          <div class="mb-6 bg-red-500/10 border border-red-500/30 rounded-2xl p-4 backdrop-blur-sm">
-            <div class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-              </svg>
-              <div>
-                <p class="font-semibold text-red-300"><%= flash[:alert] %></p>
+              <div class="flex items-center justify-between text-sm text-slate-400">
+                <div></div>
+                <a href="#" class="font-semibold text-cyan-300 hover:text-white transition">Forgot password?</a>
               </div>
             </div>
-          </div>
-        <% end %>
 
-        <!-- Form -->
-        <%= form_with url: login_path, local: true, class: "space-y-5" do |form| %>
-          
-          <% if params[:original_url].present? %>
-            <%= hidden_field_tag :original_url, params[:original_url] %>
+            <div class="grid gap-4">
+              <%= form.submit "Sign In", class: "w-full rounded-3xl bg-gradient-to-r from-cyan-500 via-violet-500 to-fuchsia-500 px-5 py-4 text-base font-semibold text-white shadow-[0_20px_70px_-30px_rgba(125,211,252,0.85)] transition duration-300 hover:scale-[1.01] hover:shadow-[0_24px_90px_-32px_rgba(125,211,252,0.9)]" %>
+              <a href="#" class="inline-flex w-full items-center justify-center rounded-3xl border border-slate-700 bg-slate-950/90 px-5 py-4 text-sm font-semibold text-slate-100 transition duration-300 hover:border-cyan-400 hover:text-white hover:bg-slate-900/95">
+                <svg class="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.85 4.05-1.27 1.45-3.257 2.986-6.59 2.986-5.231 0-9.502-4.144-9.502-9.502s4.271 9.502 9.502 9.502c2.92 0 5.603 1.064 7.178 2.989l2.335-2.336C19.268 1.889 16.823 0 12.48 0 5.597 0 .073 5.52.073 12.497s5.524 12.497 12.407 12.497c3.368 0 6.189-1.107 8.302-3.107 2.051-1.898 3.395-4.649 3.576-7.98.04-.526.056-1.189.056-1.963v-.92H12.48z"/></svg>
+                Continue with Google
+              </a>
+            </div>
+
+            <div class="pt-4 text-center text-sm text-slate-400">
+              New to FluxLink? <%= link_to "Sign up", signup_path, class: "text-cyan-300 hover:text-white font-semibold" %>
+            </div>
           <% end %>
-
-          <!-- Email Field -->
-          <div class="space-y-2">
-            <%= form.label :email, "Email Address", class: "block text-sm font-semibold text-slate-300" %>
-            <div class="relative">
-              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </span>
-              <%= form.email_field :email, 
-                  required: true,
-                  class: "w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-5 py-3 pl-12 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 transition duration-200",
-                  placeholder: "you@example.com" %>
-            </div>
-          </div>
-
-          <!-- Password Field -->
-          <div class="space-y-2">
-            <%= form.label :password, "Password", class: "block text-sm font-semibold text-slate-300" %>
-            <div class="relative">
-              <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </span>
-              <%= form.password_field :password, 
-                  required: true,
-                  class: "w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-5 py-3 pl-12 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 transition duration-200",
-                  placeholder: "••••••••" %>
-            </div>
-          </div>
-
-          <!-- Remember Me & Forgot Password -->
-          <div class="flex items-center justify-between pt-2">
-            <label class="flex items-center gap-2 cursor-pointer group">
-              <%= form.check_box :remember_me, { class: "w-5 h-5 rounded border-2 border-slate-600 bg-slate-900/50 text-indigo-500 focus:ring-2 focus:ring-indigo-500/30 cursor-pointer" } %>
-              <span class="text-sm text-slate-400 group-hover:text-slate-300 transition">Keep me signed in</span>
-            </label>
-            <a href="#" class="text-sm text-indigo-400 hover:text-indigo-300 transition font-medium">Forgot password?</a>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="pt-2">
-            <%= form.submit "Sign In", 
-                class: "w-full rounded-2xl bg-gradient-to-r from-indigo-600 to-sky-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:from-indigo-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition duration-300 active:scale-95" %>
-          </div>
-
-        <% end %>
-
-        <!-- Divider -->
-        <div class="relative my-6">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-slate-600"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-3 bg-gradient-to-b from-slate-800/50 to-slate-900/50 text-slate-400">or</span>
-          </div>
         </div>
+      </section>
+    </div>
+  </div>
+</div>
 
-        <!-- OAuth Option (if implemented) -->
-        <button type="button" class="w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-6 py-3 text-base font-semibold text-white hover:border-indigo-500 hover:bg-slate-900 transition duration-200 flex items-center justify-center gap-2">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.85 4.05-1.27 1.45-3.257 2.986-6.59 2.986-5.231 0-9.502-4.144-9.502-9.502s4.271-9.502 9.502-9.502c2.92 0 5.603 1.064 7.178 2.989l2.335-2.336C19.268 1.889 16.823 0 12.48 0 5.597 0 .073 5.52.073 12.497s5.524 12.497 12.407 12.497c3.368 0 6.189-1.107 8.302-3.107 2.051-1.898 3.395-4.649 3.576-7.98.04-.526.056-1.189.056-1.963v-.92H12.48z"/>
-          </svg>
-          Continue with Google
-        </button>
-
-        <!-- Sign Up Link -->
-        <div class="text-center pt-6 border-t border-slate-600">
-          <p class="text-slate-400 text-sm">
-            New to Fl
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+  .animate-float {
+    animation: float 9s ease-in-out infinite;
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-24px); }
+  }
+  .animate-float-slow {
+    animation: float-slow 11s ease-in-out infinite;
+  }
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.6; }
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 8s ease-in-out infinite;
+  }
+  @keyframes slide-in-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-slide-in-up {
+    animation: slide-in-up 0.7s ease-out forwards;
+  }
+</style>

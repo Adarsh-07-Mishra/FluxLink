@@ -617,6 +617,7 @@
               <%= link_to "Home", root_path, data: { transition: true } %>
               <%= link_to "Features", features_path, data: { transition: true } %>
               <%= link_to "Pricing", pricing_path, data: { transition: true } %>
+              <%= link_to "WiFi QR", signup_path, data: { transition: true }, title: "Sign up to create WiFi QR codes" %>
               <%= link_to "About", about_path, data: { transition: true } %>
               <%= link_to "Contact", contact_path, data: { transition: true } %>
             </nav>
@@ -711,8 +712,7 @@
             <ul class="space-y-3 text-sm">
               <li><%= link_to "Features", features_path, class: "text-slate-400 hover:text-white", data: { transition: true } %></li>
               <li><%= link_to "Pricing", pricing_path, class: "text-slate-400 hover:text-white", data: { transition: true } %></li>
-              <li><a href="#" class="text-slate-400 hover:text-white">API Docs</a></li>
-              <li><a href="#" class="text-slate-400 hover:text-white">Changelog</a></li>
+              <li><%= link_to "WiFi QR", (logged_in? ? wifi_qr_path : signup_path), class: "text-slate-400 hover:text-white", data: { transition: true }, title: (logged_in? ? "Create WiFi QR codes" : "Sign up to create WiFi QR codes") %></li>
             </ul>
           </div>
 
@@ -722,19 +722,6 @@
             <ul class="space-y-3 text-sm">
               <li><%= link_to "About", about_path, class: "text-slate-400 hover:text-white", data: { transition: true } %></li>
               <li><%= link_to "Contact", contact_path, class: "text-slate-400 hover:text-white", data: { transition: true } %></li>
-              <li><a href="#" class="text-slate-400 hover:text-white">Blog</a></li>
-              <li><a href="#" class="text-slate-400 hover:text-white">Status</a></li>
-            </ul>
-          </div>
-
-          <!-- Legal Links -->
-          <div class="space-y-4">
-            <h4 class="font-bold text-white uppercase tracking-wider text-xs">Legal</h4>
-            <ul class="space-y-3 text-sm">
-              <li><a href="#" class="text-slate-400 hover:text-white">Privacy Policy</a></li>
-              <li><a href="#" class="text-slate-400 hover:text-white">Terms of Service</a></li>
-              <li><a href="#" class="text-slate-400 hover:text-white">Security</a></li>
-              <li><a href="#" class="text-slate-400 hover:text-white">Cookies</a></li>
             </ul>
           </div>
 

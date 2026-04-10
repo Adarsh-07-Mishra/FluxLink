@@ -95,16 +95,24 @@
           <!-- Quick Links -->
           <div class="grid grid-cols-2 gap-4">
             <% [
-              { icon: '📚', title: 'Documentation', desc: 'Read our guides' },
-              { icon: '🐛', title: 'Report Bug', desc: 'Found an issue?' },
-              { icon: '💡', title: 'Feature Request', desc: 'Suggest an idea' },
-              { icon: '🤝', title: 'Partnership', desc: 'Work with us' }
+              { icon: '📚', title: 'Documentation', desc: 'Read our guides', url: documents_path },
+              { icon: '🐛', title: 'Report Bug', desc: 'Found an issue?', url: '#' },
+              { icon: '💡', title: 'Feature Request', desc: 'Suggest an idea', url: '#' },
+              { icon: '🤝', title: 'Partnership', desc: 'Work with us', url: '#' }
             ].each do |link| %>
-              <a href="#" class="bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 hover:border-blue-400/50 transition duration-300 group">
-                <div class="text-3xl mb-3"><%= link[:icon] %></div>
-                <p class="font-semibold text-white text-sm mb-1"><%= link[:title] %></p>
-                <p class="text-xs text-slate-500 group-hover:text-slate-400 transition"><%= link[:desc] %></p>
-              </a>
+              <% if link[:title] == 'Documentation' %>
+                <%= link_to link[:url], class: "bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 hover:border-blue-400/50 transition duration-300 group", data: { transition: true } do %>
+                  <div class="text-3xl mb-3"><%= link[:icon] %></div>
+                  <p class="font-semibold text-white text-sm mb-1"><%= link[:title] %></p>
+                  <p class="text-xs text-slate-500 group-hover:text-slate-400 transition"><%= link[:desc] %></p>
+                <% end %>
+              <% else %>
+                <a href="<%= link[:url] %>" class="bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 hover:border-blue-400/50 transition duration-300 group">
+                  <div class="text-3xl mb-3"><%= link[:icon] %></div>
+                  <p class="font-semibold text-white text-sm mb-1"><%= link[:title] %></p>
+                  <p class="text-xs text-slate-500 group-hover:text-slate-400 transition"><%= link[:desc] %></p>
+                </a>
+              <% end %>
             <% end %>
           </div>
 
@@ -288,4 +296,7 @@
   .animate-pulse {
     animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+
 </style>
+

@@ -1,0 +1,418 @@
+<% content_for(:title) { "WiFi QR Code Generator - FluxLink" } %>
+
+<div class="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+
+  <!-- Animated background gradients -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 left-1/4 w-80 h-80 bg-blue-500/30 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+    <div class="absolute top-1/3 -right-20 w-96 h-96 bg-purple-500/25 rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute -bottom-32 left-1/2 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl opacity-20 -translate-x-1/2 animate-pulse" style="animation-delay: 4s;"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+
+    <!-- ================= HEADER SECTION ================= -->
+    <section class="mb-20 text-center">
+      <div class="space-y-6 max-w-3xl mx-auto">
+        <div class="inline-flex justify-center">
+          <span class="rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-blue-300 border border-blue-400/20 backdrop-blur-sm">
+            <%= @wifi_network.present? ? '💾 Saved WiFi QR' : '📶 WiFi QR Generator' %>
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h1 class="text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            <%= @wifi_network.present? ? 'Saved WiFi QR Code' : 'Generate' %>
+            <%= @wifi_network.present? ? '' : '<span class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">WiFi QR Codes</span>'.html_safe %>
+          </h1>
+          <p class="text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
+            <%= @wifi_network.present? ? 'Your saved WiFi network QR code is ready to use' : 'Create QR codes for your WiFi networks. Share your WiFi credentials instantly with guests and visitors.' %>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <section class="mb-20">
+      <% if @wifi_network.present? %>
+        <!-- SINGLE COLUMN - QR Code Only (Viewing Saved Network) -->
+        <div class="max-w-2xl mx-auto">
+      <% else %>
+        <!-- TWO COLUMNS - Form + QR Code (Generating New) -->
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+      <% end %>
+
+        <!-- LEFT - Form (Only show when generating new QR) -->
+        <% unless @wifi_network.present? %>
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-2xl p-8 lg:sticky lg:top-8">
+
+          <!-- Form Header -->
+          <div class="mb-8 space-y-2">
+            <p class="text-xs uppercase tracking-widest text-blue-400 font-semibold">🔧 Configure Network</p>
+            <h2 class="text-3xl font-bold text-white">WiFi Details</h2>
+            <p class="text-slate-400 text-sm">Enter your WiFi network information to generate a QR code</p>
+          </div>
+
+          <!-- WiFi Form -->
+          <%= form_with url: generate_wifi_qr_path, method: :post, class: "space-y-6" do |f| %>
+
+            <!-- Network Name (SSID) -->
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-slate-300" for="ssid">Network Name (SSID) *</label>
+              <input
+                id="ssid"
+                name="ssid"
+                type="text"
+                required
+                placeholder="MyWiFiNetwork"
+                value="<%= params[:ssid] || @ssid %>"
+                class="w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-5 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition duration-200" />
+              <p class="text-xs text-slate-500">The name of your WiFi network</p>
+            </div>
+
+            <!-- Security Type -->
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-slate-300" for="security">Security Type</label>
+              <select 
+                id="security" 
+                name="security"
+                class="w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-5 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition duration-200">
+                <option value="WPA" <%= (params[:security] || @security) == 'WPA' ? 'selected' : '' %>>WPA</option>
+                <option value="WPA2" <%= (params[:security] || @security || 'WPA2') == 'WPA2' ? 'selected' : '' %>>WPA2</option>
+                <option value="WPA3" <%= (params[:security] || @security) == 'WPA3' ? 'selected' : '' %>>WPA3</option>
+                <option value="WEP" <%= (params[:security] || @security) == 'WEP' ? 'selected' : '' %>>WEP</option>
+                <option value="nopass" <%= (params[:security] || @security) == 'nopass' ? 'selected' : '' %>>No Password (Open Network)</option>
+              </select>
+              <p class="text-xs text-slate-500">Most modern networks use WPA2</p>
+            </div>
+
+            <!-- Password -->
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-slate-300" for="password">Password</label>
+              <input 
+                id="password" 
+                name="password" 
+                type="password" 
+                placeholder="Enter WiFi password"
+                value="<%= params[:password] %>"
+                class="w-full rounded-2xl border-2 border-slate-600 bg-slate-900/50 px-5 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition duration-200" />
+              <p class="text-xs text-slate-500">Leave empty for open networks</p>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="pt-4">
+              <button
+                type="submit"
+                class="w-full rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 text-base font-semibold text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition duration-300 active:scale-95">
+                🚀 Generate WiFi QR Code
+              </button>
+            </div>
+
+          <% end %>
+
+        </div>
+        <% end %>
+
+        <!-- RIGHT/CENTER - QR Code Display -->
+        <div class="<%= @wifi_network.present? ? 'w-full' : 'space-y-6' %>">
+
+          <% if @qr_code.present? %>
+            <!-- Generated QR Code -->
+            <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-2xl p-8 text-center <%= @wifi_network.present? ? 'max-w-md mx-auto' : '' %>">
+
+              <!-- QR Code Header -->
+              <div class="mb-6 space-y-2">
+                <p class="text-xs uppercase tracking-widest text-green-400 font-semibold">
+                  <%= @wifi_network.present? ? '💾 Saved Network' : '✅ Generated' %>
+                </p>
+                <h3 class="text-2xl font-bold text-white">
+                  <%= @wifi_network.present? ? 'Your Saved WiFi QR Code' : 'Your WiFi QR Code' %>
+                </h3>
+                <p class="text-slate-400 text-sm">
+                  <%= @wifi_network.present? ? 'Scan this code to connect to your saved WiFi network' : 'Scan this code to connect to your WiFi network' %>
+                </p>
+              </div>
+
+              <!-- QR Code Display -->
+              <div class="bg-white p-6 rounded-2xl inline-block mb-6 shadow-lg">
+                <div class="qr-code-container" style="width: 256px; height: 256px;">
+                  <%= @qr_code.html_safe %>
+                </div>
+              </div>
+
+              <!-- Network Info -->
+              <div class="space-y-3 mb-6">
+                <div class="bg-slate-900/50 rounded-xl p-4">
+                  <div class="text-sm text-slate-400 mb-1">Network Name</div>
+                  <div class="font-semibold text-white"><%= @ssid %></div>
+                </div>
+                <div class="bg-slate-900/50 rounded-xl p-4">
+                  <div class="text-sm text-slate-400 mb-1">Security</div>
+                  <div class="font-semibold text-white"><%= @security %></div>
+                </div>
+                <% if @password.present? %>
+                  <div class="bg-slate-900/50 rounded-xl p-4">
+                    <div class="text-sm text-slate-400 mb-1">Password</div>
+                    <div class="font-semibold text-white"><%= @password %></div>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- WiFi String (for debugging) -->
+              <div class="bg-slate-900/50 rounded-xl p-4 mb-6">
+                <div class="text-sm text-slate-400 mb-2">WiFi Config String</div>
+                <code class="text-xs text-blue-300 break-all bg-slate-800/50 p-2 rounded block"><%= @wifi_string %></code>
+              </div>
+
+              <!-- Download Button -->
+              <button
+                onclick="downloadQRCode()"
+                class="w-full rounded-2xl bg-gradient-to-r from-green-600 to-emerald-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-green-500/30 hover:shadow-xl hover:from-green-700 hover:to-emerald-700 transition duration-300 active:scale-95">
+                📥 Download QR Code
+              </button>
+
+              <!-- Instructions -->
+              <div class="mt-6 p-4 bg-blue-900/20 border border-blue-700/30 rounded-xl">
+                <h4 class="font-semibold text-white mb-3">📱 How to Connect:</h4>
+                <ol class="space-y-2 text-sm text-slate-300 list-decimal list-inside">
+                  <li>Open your phone's camera or QR scanner app</li>
+                  <li>Point it at the QR code above</li>
+                  <li>Your phone should automatically open WiFi settings</li>
+                  <li>Tap "Connect" to join the network</li>
+                </ol>
+              </div>
+
+              <!-- Troubleshooting -->
+              <div class="mt-4 p-4 bg-yellow-900/20 border border-yellow-700/30 rounded-xl">
+                <h4 class="font-semibold text-yellow-300 mb-2">⚠️ Troubleshooting:</h4>
+                <ul class="space-y-1 text-xs text-yellow-200">
+                  <li>• Automatic connection requires Android 10+ or iOS 11+</li>
+                  <li>• If it doesn't work, manually enter the network details above</li>
+                  <li>• Make sure your hotspot is active and discoverable</li>
+                  <li>• Check that the security type matches your hotspot settings</li>
+                </ul>
+              </div>
+
+              <!-- Raw WiFi String (for debugging) -->
+              <details class="mt-4 text-left">
+                <summary class="text-xs text-slate-500 cursor-pointer hover:text-slate-400">Show raw WiFi string</summary>
+                <code class="block mt-2 p-2 bg-slate-900/50 rounded text-xs text-cyan-300 break-all">
+                  <%= @wifi_string %>
+                </code>
+              </details>
+
+            </div>
+          <% else %>
+            <!-- Placeholder -->
+            <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-2xl p-8 text-center">
+
+              <!-- Placeholder Header -->
+              <div class="mb-6 space-y-2">
+                <p class="text-xs uppercase tracking-widest text-slate-400 font-semibold">📱 Preview</p>
+                <h3 class="text-2xl font-bold text-white">QR Code Preview</h3>
+                <p class="text-slate-400 text-sm">Fill out the form to generate your WiFi QR code</p>
+              </div>
+
+              <!-- Placeholder QR Code -->
+              <div class="bg-slate-800/50 p-6 rounded-2xl inline-block mb-6">
+                <div class="w-64 h-64 border-2 border-dashed border-slate-600 rounded-lg flex items-center justify-center">
+                  <div class="text-center text-slate-500">
+                    <span class="text-4xl mb-2 block">📶</span>
+                    <p class="text-sm">WiFi QR Code</p>
+                    <p class="text-xs">Will appear here</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Instructions -->
+              <div class="space-y-4 text-left">
+                <h4 class="font-semibold text-white">How it works:</h4>
+                <ul class="space-y-2 text-sm text-slate-400">
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-400 mt-1">1.</span>
+                    <span>Enter your WiFi network name (SSID)</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-400 mt-1">2.</span>
+                    <span>Select the security type (usually WPA2)</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-400 mt-1">3.</span>
+                    <span>Enter the password (leave empty for open networks)</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-400 mt-1">4.</span>
+                    <span>Click "Generate WiFi QR Code"</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-400 mt-1">5.</span>
+                    <span>Download and share the QR code</span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          <% end %>
+
+          <!-- How to Use -->
+          <% unless @wifi_network.present? %>
+          <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-2xl p-8">
+
+            <h3 class="text-xl font-bold text-white mb-4">📖 How to Use WiFi QR Codes</h3>
+
+            <div class="space-y-4 text-slate-300">
+              <div class="flex items-start gap-3">
+                <span class="text-green-400 text-lg mt-1">✓</span>
+                <div>
+                  <p class="font-semibold text-white">Print & Display</p>
+                  <p class="text-sm">Print the QR code and place it in your office, cafe, or home for easy guest access</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="text-green-400 text-lg mt-1">✓</span>
+                <div>
+                  <p class="font-semibold text-white">Share Digitally</p>
+                  <p class="text-sm">Send the QR code image to friends, family, or colleagues via email, messaging apps, or social media</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="text-green-400 text-lg mt-1">✓</span>
+                <div>
+                  <p class="font-semibold text-white">Business Use</p>
+                  <p class="text-sm">Perfect for hotels, restaurants, co-working spaces, and events</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="text-green-400 text-lg mt-1">✓</span>
+                <div>
+                  <p class="font-semibold text-white">Secure Sharing</p>
+                  <p class="text-sm">No need to verbally share passwords - just scan the code!</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <% end %>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SAVED NETWORKS SECTION ================= -->
+    <% if logged_in? && @saved_networks.present? %>
+    <section class="mb-20">
+      <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-2xl p-8">
+
+        <!-- Section Header -->
+        <div class="mb-8 space-y-2">
+          <p class="text-xs uppercase tracking-widest text-green-400 font-semibold">💾 Saved Networks</p>
+          <h2 class="text-3xl font-bold text-white">Your Saved WiFi Networks</h2>
+          <p class="text-slate-400 text-sm">Quick access to your frequently used WiFi networks</p>
+        </div>
+
+        <!-- Saved Networks Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% @saved_networks.each do |network| %>
+            <div class="bg-slate-900/50 rounded-2xl border border-slate-700/30 p-6 hover:bg-slate-800/50 transition duration-300">
+
+              <!-- Network Header -->
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                    <span class="text-blue-400">📶</span>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-white text-lg"><%= network.ssid %></h3>
+                    <p class="text-sm text-slate-400"><%= network.security %></p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Network Details -->
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-400">Security:</span>
+                  <span class="text-white"><%= network.security %></span>
+                </div>
+                <% if network.password.present? %>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-slate-400">Password:</span>
+                    <span class="text-white"><%= "•" * network.password.length %></span>
+                  </div>
+                <% end %>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-400">Created:</span>
+                  <span class="text-white"><%= network.created_at.strftime("%b %d, %Y") %></span>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex gap-2">
+                <%= link_to wifi_qr_show_path(network), class: "flex-1 bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition duration-300 text-center" do %>
+                  👁️ View QR
+                <% end %>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </section>
+    <% end %>
+
+  </div>
+
+</div>
+
+<!-- Download QR Code Script -->
+<script>
+  function downloadQRCode() {
+    const svgElement = document.querySelector('.qr-code-container svg');
+    if (!svgElement) return;
+
+    // Create a blob from the SVG
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+
+    // Create download link
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(svgBlob);
+    downloadLink.download = 'wifi-qr-code.svg';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+    // Clean up the URL object
+    URL.revokeObjectURL(downloadLink.href);
+  }
+</script>
+
+<style>
+  /* QR Code styling */
+  .qr-code-container svg {
+    width: 100%;
+    height: 100%;
+    max-width: 256px;
+    max-height: 256px;
+  }
+
+  /* Form styling */
+  input:focus, select:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  /* Button hover effects */
+  button:hover {
+    transform: translateY(-2px);
+  }
+
+  button:active {
+    transform: translateY(0);
+  }
+</style>

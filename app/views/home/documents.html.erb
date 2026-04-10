@@ -1,0 +1,465 @@
+<% content_for(:title) { "Documentation - FluxLink" } %>
+
+<div class="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+  
+  <!-- Animated background gradients -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 left-1/4 w-80 h-80 bg-blue-500/30 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+    <div class="absolute top-1/3 -right-20 w-96 h-96 bg-purple-500/25 rounded-full blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute -bottom-32 left-1/2 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl opacity-20 -translate-x-1/2 animate-pulse" style="animation-delay: 4s;"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+
+    <!-- ================= HEADER SECTION ================= -->
+    <section class="mb-20 text-center">
+      <div class="space-y-6 max-w-3xl mx-auto">
+        <div class="inline-flex justify-center">
+          <span class="rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-blue-300 border border-blue-400/20 backdrop-blur-sm">
+            📚 Documentation
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h1 class="text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            FluxLink 
+            <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Documentation</span>
+          </h1>
+          <p class="text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
+            Everything you need to know about using FluxLink to create, manage, and track your short links.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TABLE OF CONTENTS ================= -->
+    <section class="mb-20">
+      <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-2xl p-8 md:p-12">
+        <h2 class="text-2xl font-bold text-white mb-8">📋 Quick Navigation</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <a href="#getting-started" class="group flex items-center gap-3 p-4 rounded-lg hover:bg-slate-700/50 transition-colors">
+            <span class="text-2xl">🚀</span>
+            <div>
+              <p class="font-semibold text-white group-hover:text-blue-400">Getting Started</p>
+              <p class="text-sm text-slate-400">Create your first short link in minutes</p>
+            </div>
+          </a>
+
+          <a href="#features" class="group flex items-center gap-3 p-4 rounded-lg hover:bg-slate-700/50 transition-colors">
+            <span class="text-2xl">✨</span>
+            <div>
+              <p class="font-semibold text-white group-hover:text-blue-400">Core Features</p>
+              <p class="text-sm text-slate-400">Explore powerful link management tools</p>
+            </div>
+          </a>
+
+          <a href="#user-accounts" class="group flex items-center gap-3 p-4 rounded-lg hover:bg-slate-700/50 transition-colors">
+            <span class="text-2xl">👤</span>
+            <div>
+              <p class="font-semibold text-white group-hover:text-blue-400">User Accounts</p>
+              <p class="text-sm text-slate-400">Manage your account and sign in</p>
+            </div>
+          </a>
+
+          <a href="#analytics" class="group flex items-center gap-3 p-4 rounded-lg hover:bg-slate-700/50 transition-colors">
+            <span class="text-2xl">📊</span>
+            <div>
+              <p class="font-semibold text-white group-hover:text-blue-400">Analytics & Tracking</p>
+              <p class="text-sm text-slate-400">Monitor link performance and engagement</p>
+            </div>
+          </a>
+
+          <a href="#security" class="group flex items-center gap-3 p-4 rounded-lg hover:bg-slate-700/50 transition-colors">
+            <span class="text-2xl">🔒</span>
+            <div>
+              <p class="font-semibold text-white group-hover:text-blue-400">Security & Privacy</p>
+              <p class="text-sm text-slate-400">Learn about link protection options</p>
+            </div>
+          </a>
+
+          <a href="#qr-codes" class="group flex items-center gap-3 p-4 rounded-lg hover:bg-slate-700/50 transition-colors">
+            <span class="text-2xl">📱</span>
+            <div>
+              <p class="font-semibold text-white group-hover:text-blue-400">QR Codes</p>
+              <p class="text-sm text-slate-400">Generate and customize QR codes</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DOCUMENTATION SECTIONS ================= -->
+
+    <!-- Getting Started -->
+    <section id="getting-started" class="mb-20 scroll-mt-20">
+      <h2 class="text-4xl font-bold text-white mb-8">🚀 Getting Started</h2>
+      
+      <div class="space-y-6">
+        <!-- Step 1 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-lg font-bold text-blue-400">1</div>
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-white mb-2">Create an Account</h3>
+              <p class="text-slate-300 mb-4">Sign up with your email to get started. Creating an account allows you to save and manage all your shortened links in one place.</p>
+              <code class="block bg-slate-900/50 rounded-lg p-3 text-sm text-cyan-300 border border-slate-700">
+                Visit <%= link_to "Sign Up", signup_path, class: "text-blue-400 hover:underline" %> to create your free account
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-lg font-bold text-purple-400">2</div>
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-white mb-2">Shorten a Link</h3>
+              <p class="text-slate-300 mb-4">Enter any long URL and click "Shorten" to create a beautiful, short link. You can customize the short code to make it memorable.</p>
+              <ul class="text-slate-300 space-y-2">
+                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Original URL is required</li>
+                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Default 6-character short code is auto-generated</li>
+                <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Optional: Customize your short code</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-lg font-bold text-cyan-400">3</div>
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-white mb-2">Share & Track</h3>
+              <p class="text-slate-300 mb-4">Share your short link anywhere and watch the analytics in real-time. Track clicks, geographic data, and more.</p>
+              <div class="text-slate-300 space-y-2">
+                <p class="text-sm">Your short link format:</p>
+                <code class="block bg-slate-900/50 rounded-lg p-3 text-cyan-300 border border-slate-700">
+                  <%= root_url %>&lt;short_code&gt;
+                </code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Features -->
+    <section id="features" class="mb-20 scroll-mt-20">
+      <h2 class="text-4xl font-bold text-white mb-8">✨ Core Features</h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Feature 1 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="text-3xl mb-3">🎯</div>
+          <h3 class="text-xl font-bold text-white mb-3">Custom Short Codes</h3>
+          <p class="text-slate-300">Create memorable short codes that represent your brand or campaign instead of using auto-generated codes.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="text-3xl mb-3">🔐</div>
+          <h3 class="text-xl font-bold text-white mb-3">Password Protection</h3>
+          <p class="text-slate-300">Add password protection to your short links to restrict access to only authorized users.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="text-3xl mb-3">📊</div>
+          <h3 class="text-xl font-bold text-white mb-3">Detailed Analytics</h3>
+          <p class="text-slate-300">Track click counts, referrer information, geographic location data, and device types for each link.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="text-3xl mb-3">📱</div>
+          <h3 class="text-xl font-bold text-white mb-3">QR Code Generation</h3>
+          <p class="text-slate-300">Automatically generate professional QR codes for your short links with customization options.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="text-3xl mb-3">🚀</div>
+          <h3 class="text-xl font-bold text-white mb-3">Link Management</h3>
+          <p class="text-slate-300">Organize, edit, disable, or delete your links. Keep everything organized with an intuitive dashboard.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 hover:shadow-xl transition-shadow">
+          <div class="text-3xl mb-3">⚡</div>
+          <h3 class="text-xl font-bold text-white mb-3">Lightning Fast</h3>
+          <p class="text-slate-300">Built for speed. Your short links redirect instantly with minimal latency, ensuring the best user experience.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- User Accounts -->
+    <section id="user-accounts" class="mb-20 scroll-mt-20">
+      <h2 class="text-4xl font-bold text-white mb-8">👤 User Accounts</h2>
+      
+      <div class="space-y-6">
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Creating an Account</h3>
+          <p class="text-slate-300 mb-4">Creating an account is free and takes less than a minute:</p>
+          <ol class="space-y-3 text-slate-300 list-decimal list-inside">
+            <li>Click "Sign Up" in the top navigation</li>
+            <li>Enter your email address</li>
+            <li>Create a secure password</li>
+            <li>Verify your email address</li>
+            <li>Start creating short links!</li>
+          </ol>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Signing In</h3>
+          <p class="text-slate-300 mb-4">To sign in to your FluxLink account:</p>
+          <ol class="space-y-3 text-slate-300 list-decimal list-inside">
+            <li>Click "Sign In" in the top navigation</li>
+            <li>Enter your email address and password</li>
+            <li>You'll be redirected to your dashboard</li>
+          </ol>
+          <p class="text-slate-300 mt-4">Keep your password secure and never share it with anyone.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Dashboard</h3>
+          <p class="text-slate-300">After signing in, you'll have access to your dashboard where you can:</p>
+          <ul class="space-y-2 text-slate-300 mt-4">
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> View all your shortened links</li>
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Create new short links</li>
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> View detailed analytics for each link</li>
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Edit link settings and protection</li>
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Download QR codes</li>
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Manage your account settings</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analytics & Tracking -->
+    <section id="analytics" class="mb-20 scroll-mt-20">
+      <h2 class="text-4xl font-bold text-white mb-8">📊 Analytics & Tracking</h2>
+      
+      <div class="space-y-6">
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Real-Time Analytics</h3>
+          <p class="text-slate-300 mb-4">Each short link provides detailed analytics including:</p>
+          <div class="grid md:grid-cols-2 gap-4 mt-4">
+            <div class="space-y-2">
+              <p class="font-semibold text-white">📈 Click Metrics</p>
+              <p class="text-sm text-slate-400">Total clicks and click history</p>
+            </div>
+            <div class="space-y-2">
+              <p class="font-semibold text-white">🌍 Geographic Data</p>
+              <p class="text-sm text-slate-400">Country and city information</p>
+            </div>
+            <div class="space-y-2">
+              <p class="font-semibold text-white">📱 Device Types</p>
+              <p class="text-sm text-slate-400">Desktop, tablet, and mobile breakdowns</p>
+            </div>
+            <div class="space-y-2">
+              <p class="font-semibold text-white">🔗 Referrers</p>
+              <p class="text-sm text-slate-400">Where your clicks are coming from</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Understanding Your Data</h3>
+          <p class="text-slate-300 mb-4">The analytics dashboard displays information in easy-to-read charts and tables:</p>
+          <ul class="space-y-3 text-slate-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-400 mt-1">✓</span>
+              <div>
+                <p class="font-semibold text-white">Click Trends</p>
+                <p class="text-sm">See how your link performance changes over time with interactive charts</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-400 mt-1">✓</span>
+              <div>
+                <p class="font-semibold text-white">Top Referrers</p>
+                <p class="text-sm">Identify which sources are driving the most traffic to your links</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-400 mt-1">✓</span>
+              <div>
+                <p class="font-semibold text-white">Geographic Insights</p>
+                <p class="text-sm">Understand your audience location to better target your content</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security & Privacy -->
+    <section id="security" class="mb-20 scroll-mt-20">
+      <h2 class="text-4xl font-bold text-white mb-8">🔒 Security & Privacy</h2>
+      
+      <div class="space-y-6">
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Password Protection</h3>
+          <p class="text-slate-300 mb-4">Protect sensitive short links with password authentication:</p>
+          <ul class="space-y-2 text-slate-300 mt-4">
+            <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Set a password when creating or editing a link</li>
+            <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Users must enter the password to access the link</li>
+            <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Passwords are securely encrypted</li>
+            <li class="flex items-center gap-2"><span class="text-blue-400">•</span> Change or remove passwords at any time</li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Link Status Control</h3>
+          <p class="text-slate-300 mb-4">Manage when your links are active:</p>
+          <ul class="space-y-2 text-slate-300 mt-4">
+            <li class="flex items-center gap-2"><span class="text-blue-400">•</span> <strong>Active:</strong> Link redirects normally</li>
+            <li class="flex items-center gap-2"><span class="text-blue-400">•</span> <strong>Inactive:</strong> Link doesn't redirect (useful for temporary suspension)</li>
+            <li class="flex items-center gap-2"><span class="text-blue-400">•</span> <strong>Delete:</strong> Permanently remove a link</li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Data Privacy</h3>
+          <p class="text-slate-300 mb-4">Your data is important to us:</p>
+          <ul class="space-y-2 text-slate-300 mt-4">
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> All data is encrypted in transit with HTTPS</li>
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Your account information is never shared</li>
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Analytics are collected ethically without tracking cookies</li>
+            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> You can delete your account and all associated data at any time</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- QR Codes -->
+    <section id="qr-codes" class="mb-20 scroll-mt-20">
+      <h2 class="text-4xl font-bold text-white mb-8">📱 QR Codes</h2>
+      
+      <div class="space-y-6">
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Generate QR Codes</h3>
+          <p class="text-slate-300 mb-4">Every short link can be converted to a QR code automatically. QR codes are perfect for:</p>
+          <ul class="space-y-2 text-slate-300 mt-4">
+            <li class="flex items-center gap-2"><span class="text-purple-400">→</span> Print marketing materials</li>
+            <li class="flex items-center gap-2"><span class="text-purple-400">→</span> Social media posts</li>
+            <li class="flex items-center gap-2"><span class="text-purple-400">→</span> Business cards</li>
+            <li class="flex items-center gap-2"><span class="text-purple-400">→</span> Presentations</li>
+            <li class="flex items-center gap-2"><span class="text-purple-400">→</span> Event materials</li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">How to Use QR Codes</h3>
+          <ol class="space-y-3 text-slate-300 list-decimal list-inside">
+            <li>Create or select a short link from your dashboard</li>
+            <li>Click on the link to view details</li>
+            <li>The QR code will be displayed automatically</li>
+            <li>Download the QR code image</li>
+            <li>Use it in your marketing materials</li>
+          </ol>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8">
+          <h3 class="text-xl font-bold text-white mb-4">Scanning QR Codes</h3>
+          <p class="text-slate-300 mb-4">Users can scan your QR code with:</p>
+          <div class="grid md:grid-cols-2 gap-4 mt-4">
+            <div>
+              <p class="font-semibold text-white text-sm mb-2">📱 Mobile Devices</p>
+              <p class="text-sm text-slate-400">Built-in camera apps on iOS and Android</p>
+            </div>
+            <div>
+              <p class="font-semibold text-white text-sm mb-2">💻 Computers</p>
+              <p class="text-sm text-slate-400">Browser-based QR code scanners</p>
+            </div>
+            <div>
+              <p class="font-semibold text-white text-sm mb-2">🎯 QR Apps</p>
+              <p class="text-sm text-slate-400">Dedicated QR code scanner apps</p>
+            </div>
+            <div>
+              <p class="font-semibold text-white text-sm mb-2">⚡ Instant</p>
+              <p class="text-sm text-slate-400">Direct redirect to your destination URL</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ SECTION ================= -->
+    <section class="mb-20">
+      <h2 class="text-4xl font-bold text-white mb-8">❓ Frequently Asked Questions</h2>
+      
+      <div class="space-y-4">
+        <details class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-6 group cursor-pointer hover:shadow-xl transition-shadow">
+          <summary class="flex items-center justify-between text-white font-semibold text-lg">
+            How long do short links last?
+            <span class="text-2xl group-open:rotate-180 transition-transform">➜</span>
+          </summary>
+          <p class="text-slate-300 mt-4">Your short links are permanent. They will continue to work indefinitely unless you delete them or deactivate them.</p>
+        </details>
+
+        <details class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-6 group cursor-pointer hover:shadow-xl transition-shadow">
+          <summary class="flex items-center justify-between text-white font-semibold text-lg">
+            Can I edit a link after creating it?
+            <span class="text-2xl group-open:rotate-180 transition-transform">➜</span>
+          </summary>
+          <p class="text-slate-300 mt-4">Yes! You can edit the destination URL, add/change password protection, enable/disable the link, and generate QR codes for any existing link.</p>
+        </details>
+
+        <details class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-6 group cursor-pointer hover:shadow-xl transition-shadow">
+          <summary class="flex items-center justify-between text-white font-semibold text-lg">
+            Is there a limit to how many links I can create?
+            <span class="text-2xl group-open:rotate-180 transition-transform">➜</span>
+          </summary>
+          <p class="text-slate-300 mt-4">No! Create as many short links as you need. Our service is designed to scale with your needs.</p>
+        </details>
+
+        <details class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-6 group cursor-pointer hover:shadow-xl transition-shadow">
+          <summary class="flex items-center justify-between text-white font-semibold text-lg">
+            Can I see who clicked on my links?
+            <span class="text-2xl group-open:rotate-180 transition-transform">➜</span>
+          </summary>
+          <p class="text-slate-300 mt-4">You can see detailed analytics including geographic location, device type, and referrer information. However, individual user identities are not tracked for privacy reasons.</p>
+        </details>
+
+        <details class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-6 group cursor-pointer hover:shadow-xl transition-shadow">
+          <summary class="flex items-center justify-between text-white font-semibold text-lg">
+            How do I delete a link?
+            <span class="text-2xl group-open:rotate-180 transition-transform">➜</span>
+          </summary>
+          <p class="text-slate-300 mt-4">Go to your dashboard, find the link you want to delete, and click the delete button. You can also disable a link temporarily instead of deleting it.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ================= HELP SECTION ================= -->
+    <section class="mb-20">
+      <div class="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-xl rounded-3xl border border-blue-400/30 p-12 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Need More Help?</h2>
+        <p class="text-slate-300 mb-8 max-w-2xl mx-auto">
+          Can't find what you're looking for? Our support team is here to help! Reach out with any questions or feedback.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <%= link_to "📧 Contact Support", contact_path, class: "btn btn-primary", data: { transition: true } %>
+          <%= link_to "🎯 View Features", features_path, class: "btn btn-secondary", data: { transition: true } %>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<style>
+  details {
+    user-select: none;
+  }
+  
+  details > summary {
+    list-style: none;
+  }
+  
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
